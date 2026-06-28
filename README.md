@@ -138,12 +138,6 @@ trainer.cl_sct_evolution()  → L1→L2→L3训练管线
 
 ---
 
-## License
-
-CC BY-NC-ND 4.0 (Creative Commons Attribution-NonCommercial-NoDerivatives)
-
----
-
 *文档：`docs/`下含白皮书(96K)和架构设计书(16K)。*
 
 
