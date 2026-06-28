@@ -172,3 +172,46 @@ See `docs/Ω-architecture-design.md` for details.
 ---
 
 *Documentation includes a 96K-character whitepaper and a 16K architecture design document under `docs/`.*
+
+
+## ⚠️ Project Status & Collaboration
+
+Ω-AGI is currently in a **pre-alpha research stage**.
+
+Due to **limited funding and resources**, active development has slowed and is no longer fully sustained by a dedicated research team.
+
+However, the theoretical framework, core architecture, and formal system remain open and complete at the conceptual level.
+
+
+We are now looking for:
+
+- Researchers interested in **gradient-based generative systems**
+- Experts in **category theory, formal systems, or mathematical AI**
+- Systems engineers (Rust / Zig / low-level architectures)
+- Individuals interested in **endogenous intelligence and self-evolving computation**
+
+
+## 🤝 Collaboration Vision
+
+This project is not closed.
+
+It is intended as a **research substrate**, open for continuation, reinterpretation, and extension by the community.
+
+We welcome anyone who shares interest in:
+
+- Δ-operator computation systems  
+- CDL (Category Difference Lattice) formalism  
+- endogenous intelligence models  
+- Self-evolving computational architectures  
+
+## 📬 Contact / Contribution
+
+If you are interested in contributing, extending, or discussing this work:
+
+- Open a GitHub Discussion
+- Submit a Research Proposal via Issues
+- Fork and experiment freely
+
+---
+
+> “A system designed to evolve should not depend on a single source of continuation.”
