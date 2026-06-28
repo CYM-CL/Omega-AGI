@@ -178,7 +178,7 @@ See `docs/Ω-architecture-design.md` for details.
 
 Ω-AGI is currently in a **pre-alpha research stage**.
 
-Due to **limited funding and resources**, active development has slowed and is no longer fully sustained by a dedicated research team.
+Due to limited funding and resources, active development has been significantly slowed and can no longer be fully sustained by an independent researcher.
 
 However, the theoretical framework, core architecture, and formal system remain open and complete at the conceptual level.
 
