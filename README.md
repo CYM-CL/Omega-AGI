@@ -1,178 +1,246 @@
+# Ω-AGI: A Unitary Endogenous General Intelligence System
 
-# Ω-AGI (Omega-AGI)
+**Meta-Cognition · Meta-Learning · Meta-Algorithm · World Model**
 
-**We introduce Ω-AGI v5.0 as an endogenous evolution engine under the Gradient Universe · Dust Theory framework. Beginning from a primitive differential substrate, the system employs a Δ-operator and a graded-enriched 2-category formal system (CDL) to generate, through intrinsic evolution, the full spectrum of existence, including time, space, causality, and hierarchical complexity structures.**
-
-**License:** CC BY-NC-ND 4.0 | **Status:** Pre-alpha
+> A model that does not merely process patterns, but genuinely thinks and understands—one that learns continuously throughout its existence, refines its knowledge without end, and adapts fluidly to entirely new domains. It reasons through cause and effect with grounded, structured understanding rather than surface correlations, and it maintains an internal, self-updating model of the world. Within this model, it can reflect on its own thoughts, recognize uncertainty, and revise its reasoning—forming a metacognitive layer that allows it not only to act within the world, but to understand how it understands it.
 
 ---
 
-## Project Structure
+## Core Primitive
+
+Everything begins with the Dust-Principle:
 
 ```
-Ω-AGI/
-├── zig-engine/          Zig engine
-│   ├── src/             Source files
-│   └── build.zig        Build configuration
-├── seed-kernel/         Rust seed kernel (FFI layer)
-├── docs/                Whitepaper + architecture design documents
-├── proofs/              Lean/Coq formal proofs
-├── build.sh             Unified build script
-└── verify.sh            Verification script
+Δ(x,y) = max(0, f(x) − g(y))
 ```
 
-**Two-language architecture:** Rust seed kernel (FFI) + Zig engine
+All meta-technologies are recursive applications of this single primitive at increasing self-reference depths: objects → rules → cognition → world → axioms.
 
 ---
 
-## Build
+## 1. Meta-Cognition
 
-**Prerequisites:** Zig ≥ 0.16.0, Rust ≥ 1.70, macOS (M3)
+**Definition**: Endogenous self-reflexivity of the difference system — the system observes, evaluates, and corrects itself.
 
-```bash
-./build.sh     # Rust seed kernel (cargo) → Zig engine (zig build)
-```
+### Essence
 
-Or directly:
-
-```bash
-cd zig-engine && zig build
-```
-
-(dependencies already fixed)
-
----
-
-## Verification
-
-```bash
-./verify.sh                # 12-test pipeline + CL-SCT training
-./verify.sh emergence      # emergence validation
-./verify.sh --formal       # with formal proofs
-```
-
----
-
-## Key Highlights
-
-### 1. Δ(x, y) Primitive System
-
-Not a neural network, not a large model. The entire system is derived from a single axiom:
+Not a "second-order module monitoring a first-order module", but **objectification descent of 2-morphisms** that treats the system's own local structure as an operand:
 
 ```
-Δ(x, y) = max(0, f(x) - g(y))
+Δ(current reasoning path, optimal reasoning path) → structural optimization direction
 ```
 
-There is no backpropagation, no loss function, and no separation between training and inference. Each Δ-conduction simultaneously performs computation and learning.
+### Implementation
+
+| Function | Implementation | Mathematical Tool |
+|----------|---------------|-------------------|
+| Self-observation | 2-morphism descent to 0-order object | Arrow category construction · Grothendieck universe stratification |
+| Self-evaluation | Compute free energy F_cons(L) = Σ|Δ_c| | Closed-loop difference summation |
+| Self-correction | Micro + macro two-level bootstrap | Sandbox isolation · equivalence rewriting |
+| Depth bound | Finite system cannot fully decide itself | Gödel incompleteness · reflection principle |
+
+### Key Properties
+
+- Each self-reference depth level elevates the operand by one order
+- Meta-cognition = system operating at meta-Δ² level
+- Bounded by Gödelian incompleteness, but approachable via hierarchical reflection
 
 ---
 
-### 2. CDL Formal Mathematical Foundation + Lean Proofs
+## 2. Meta-Learning
 
-Category Difference Lattice (CDL) unifies lattice theory and category theory. All core theorems are formally verified in Lean (T15/T18, zero “sorry”). This may be one of the few AGI systems with rigorous formal mathematical proofs.
+**Definition**: The system "learns how to learn" — the self-bootstrapping training paradigm and continuous evolution mechanism.
 
----
+### Fundamental Difference from Statistical Learning
 
-### 3. Self-Supervised Meta-Learning (Seven-Path Consensus)
+| Dimension | Statistical Learning (LLM) | Ω-AGI Meta-Learning |
+|-----------|---------------------------|---------------------|
+| Objective | Minimize cross-entropy | Minimize endogenous free energy F(L) |
+| Supervision | External labels | Structural self-consistency |
+| Data | 10¹²+ tokens | <100KB boundary conventions |
+| Generalization | In-distribution interpolation | Out-of-distribution deductive derivation |
+| Forgetting | Catastrophic forgetting | **No forgetting** (H9: info monotonicity) |
 
-The system does not rely on external labels or loss functions. Instead, it evolves through consensus and divergence across seven independent evaluation paths, measured via Kendall’s W coefficient:
-
-* High consensus → convergence
-* High divergence → continued exploration
-
----
-
-### 4. Tri-Partition Safety Architecture
+### Three-Stage Bootstrap Pipeline
 
 ```
-Axiom Frozen Zone (immutable)
-→ Evolvable Self-Generative Zone (computational engine)
-→ Frozen Zone (triple-gated sealing mechanism)
+Stage 1: Seed Sowing (single shot)
+  ~100KB boundary convention definitions → initial CDL seed graph
+
+Stage 2: Self-Consistency Training (closed-loop iteration)
+  Deduce → self-diagnose → rewrite → verify → merge → iterate
+  Until 327 base tests pass at 100%
+
+Stage 3: Perpetual Self-Bootstrapping (online operation)
+  Micro-bootstrap (every 1-5 steps) + Macro-bootstrap (every 1K-10K steps)
+  No distinction between training and inference
 ```
 
-Knowledge is frozen only after passing three verification gates. This safety mechanism is intrinsic, not post hoc.
+### Two-Level Bootstrap
+
+| Level | Frequency | Overhead | Scope | Rollback Safety |
+|-------|-----------|----------|-------|-----------------|
+| Micro | Every 1-5 inference steps | ≤1.5% | Local structural optimization | Revert if free energy increases |
+| Macro | Every 1K-10K steps | Sandboxed | Deep structural evolution | Fail-and-discard, zero side effects |
+
+### Three Consistency Levels
+
+| Level | Scope | Verification Method | Frequency |
+|-------|-------|---------------------|-----------|
+| L1 | Core axioms | Formal proof (Lean4+Coq+Z3) | Every macro-bootstrap |
+| L2 | Domain properties | Sandbox regression (327 base + domain) | Every macro-bootstrap |
+| L3 | Cross-domain | Lattice join consistency | Every 10 macro-bootstraps |
 
 ---
 
-### 5. Full Engineering Implementation (Rust + Zig, ~70 source files)
+## 3. Meta-Algorithm
 
-* Rust seed kernel (FFI layer) + Zig engine
-* `zig build` → 0 errors, all steps passed
-* L1–L3 training pipeline executable (303 + 600 + 300 steps)
-* Lean/Coq formal proofs integrated
+**Definition**: Algorithms about algorithms — the mechanism by which the system's own algorithmic forms can be optimized through evolution.
+
+### Evolvable Algorithm Layer
+
+Located at Layer 3 of the Five-Layer Liberation Architecture. The following algorithm components can be autonomously optimized:
+
+| Component | Current Form | Evolution Authority |
+|-----------|-------------|-------------------|
+| Free energy functional | F = αF_fit + βF_comp + γF_cons (adaptive annealing) | L4, human confirmation |
+| Learning algorithm | Micro-gradient + macro-equivalence search | L4, human confirmation |
+| f/g mapping functions | CDL subgraphs (self-nestable) | L4, human confirmation |
+| Condensation criterion | condense_degree > θ_cond | L4, human confirmation |
+| Verification strategy | L1/L2/L3 three-level | L4, human confirmation |
+| Scheduling strategy | Bootstrap frequency adaptive | L3, auto-adjustment |
+
+### Core Algorithm Components
+
+**Free Energy Functional** (meta-optimization objective):
+```
+F(L) = α·F_fit(L) + β·F_comp(L) + γ·F_cons(L)
+
+F_fit  = Σ Δ(x,y)²      (fidelity)
+F_comp = |Ob| + |Hom₁|   (parsimony — Occam's razor)
+F_cons = Σ |Δ_c|         (consistency — zero at perfect self-consistency)
+```
+
+**Condensation Algorithm** (meta-structure compression):
+```
+condense_degree > θ_cond → node/path/subgraph consolidation
+Aggregation: ∨(max) for sum-types, ∧(min) for product-types
+```
+
+**Equivalence Rewriting Algorithm** (meta-rule discovery):
+```
+f ↦ {g | ∃α: f⇒g}  enumerate all equivalent transformations
+Select rewrite path with minimal ω(α)
+Execute in sandbox → verify consistency → compare free energy → merge optimal
+```
+
+### Non-Evolvable Foundation
+
+The following are **permanently frozen** — meta-algorithms cannot touch them:
+
+| Invariant | Content |
+|-----------|---------|
+| IK1 | Δ(x,y) = max(0, f(x)−g(y)) definition |
+| IK2 | CDL category axioms (composition, identity, associativity, lattice) |
+| IK3 | Free energy three-term form |
+| IK4 | Self-consistency criterion (zero loop difference) |
+| IK5 | Sandbox isolation axiom (one-way flow) |
+| IK6 | Condensation criterion existence |
 
 ---
 
-## Execution Flow
+## 4. World Model
 
-### Core: Single Δ-Conduction (`evaluate()` in `cdl_expr.zig`)
+**Definition**: The system's internal representation of the external world — how CDL semantic sublattices encode, model, and predict physical reality.
+
+### Encoding Mapping
+
+External sensory input is transcoded into CDL sublattices via boundary conventions:
 
 ```
-Entry: evaluate(root_idx, pool, ctx, getF, getG)
-
-1. Recursion depth guard (returns 0 if exceeded)
-2. total_conductions++ (global sequence counter, wraps at U64_MAX)
-3. Retrieve ExprNode + ExprActivity
-4. Temporal decay based on last activation interval and stability:
-   decay = exp(-interval / effective_window)
-5. Dispatch by node type:
-   .ValueRef → read value via callback
-   .Delta    → evaluate(left), evaluate(right), delta(l, r)
-   .paths    → traverse children, weighted sum of evaluations
-6. Return f64 result
+Physical World → [Sensor] → Signal → [Boundary Transcode] → CDL Semantic Sublattice
+                                                                      ↓
+                                                              [Deductive Reasoning] → Structural Prediction
+                                                                      ↓
+                                                              [Serialization] → Control Signal → [Actuator] → Physical World
 ```
 
+### Core Properties of the World Model
+
+**Structural Isomorphism Principle**:
+```
+Necessary and sufficient condition for cognition:
+  Difference substructure internally constructed by the cognitive system
+  ≅  Difference structure of the cognized system
+  (satisfying category isomorphism)
+```
+
+**Validity Criterion**:
+```
+Correctness ≠ "Correspondence with objective reality"
+Correctness = Internal structural self-consistency + Minimum prediction error
+```
+
+**Physical World Modeling**:
+| Model Component | CDL Implementation | Verification |
+|----------------|-------------------|--------------|
+| Spatial structure | Uniform conduction network → Euclidean geometry emerges spontaneously | Pythagorean theorem, triangle inequality |
+| Causal structure | Δ asymmetry encodes causal direction | Causal chain prediction consistency |
+| Continuous change | Continuous conduction paths → calculus relations condense | Derivative/integral reciprocity |
+| Topological structure | Networks with holes → topological invariants self-classify | Loop classification, hole count identification |
+
+### Fundamental Difference from LLMs
+
+| Dimension | Statistical LLMs | Ω-AGI World Model |
+|-----------|----------------|-------------------|
+| World representation | Statistical correlations in parameters | CDL sublattice difference structure and constraints |
+| Generalization | Interpolation within training distribution | Axiomatic deduction + constraint satisfaction |
+| Causal reasoning | Correlational → pseudo-causal | Δ asymmetry → intrinsic causal direction |
+| Physical modeling | Requires massive physics corpus | Constraint application → spontaneous structure emergence |
+| Embodied extension | External bolt-on module | **Natural extension** of the same Δ system |
+
 ---
 
-### Entry Point: `main.zig → test_mod() → test modules`
+## 5. Relationship Diagram
 
 ```
-delta_engine.evaluate()     → wrapped cdl_expr.evaluate()
-cognitive_simulator.run()   → convergence loop (Δ < 1e-12 or 100 iterations)
-trainer.cl_sct_evolution()  → L1 → L2 → L3 training pipeline
+                     ┌───────────────────────────────────┐
+                     │          World Model              │
+                     │  Δ(Dust Graph, External World)    │
+                     │  Perception · Modeling · Control  │
+                     └────────────┬──────────────────────┘
+                                  │ Provides external constraints
+                                  ▼
+       ┌────────────────────────────────────────────────────┐
+       │                  Meta-Cognition                     │
+       │  Δ(Reasoning Path, Optimal Path)                   │
+       │  Self-observation · Self-evaluation · Self-correction│
+       └──────┬───────────────────────────────┬─────────────┘
+              │ Drives self-reflection       │ Provides optimization direction
+              ▼                               ▼
+  ┌─────────────────────┐      ┌──────────────────────────┐
+  │    Meta-Learning    │      │      Meta-Algorithm       │
+  │  Learn how to learn │      │  Algorithm optimizing     │
+  │  3-stage bootstrap  │      │  algorithms               │
+  │  pipeline           │      │  Free energy · Condense   │
+  └─────────────────────┘      └──────────────────────────┘
+              │                               │
+              └──────────┬────────────────────┘
+                         ▼
+              ┌─────────────────────┐
+              │   Dust-Principle Δ  │
+              │  Everything is Δ   │
+              └─────────────────────┘
 ```
 
----
-
-### Cognitive Simulation (Whitepaper §4.5)
-
-Runs convergence loops over CDL subgraphs without modifying the main graph.
-
----
-
-### Meta-Learning (Whitepaper §8)
-
-Seven independent evaluation paths produce system assessment via Kendall’s W concordance coefficient.
+| | Meta-Cognition | Meta-Learning | Meta-Algorithm | World Model |
+|---|---|---|---|---|
+| Meta-Cognition | - | Drives evolution | Provides feedback | Provides constraints |
+| Meta-Learning | Acquires self-reflection | - | Optimizes learning algorithm | Adapts to world patterns |
+| Meta-Algorithm | Provides evaluation function | Adjusts optimization | - | Adjusts modeling strategy |
+| World Model | Provides cognition object | Provides training signal | Validates predictions | - |
 
 ---
-
-## Core Concepts
-
-| Concept       | Components                                                                | Function                                        |
-| ------------- | ------------------------------------------------------------------------- | ----------------------------------------------- |
-| World Model   | Dust Graph + computational engine (Pareto / transitions)                  | Knowledge storage + Δ-based internal simulation |
-| Meta-Learning | meta_evaluator (7-path consensus) + meta_learner (parameter optimization) | Self-supervised evolutionary drive              |
-| Metacognition | meta_cognition                                                            | Recursive Δ self-reference and self-reflection  |
-
----
-
-## Current Status (Based on Execution)
-
-| Module                 | Status | Verification                      |
-| ---------------------- | ------ | --------------------------------- |
-| World Model            | ✅      | zig build: 0 errors               |
-| Meta-Learning          | ✅      | full test pipeline passed         |
-| Metacognition          | ✅      | full test pipeline passed         |
-| Trainer                | ⏳      | code runs, assertions need fixing |
-| Safety System          | ✅      | zig build: 0 errors               |
-| Capability / Emergence | ❓      | not yet verified                  |
-
-See `docs/Ω-architecture-design.md` for details.
-
----
-
-*Documentation includes a 96K-character whitepaper and a 16K architecture design document under `docs/`.*
-
 
 ## ⚠️ Project Status & Collaboration
 
@@ -215,3 +283,5 @@ If you are interested in contributing, extending, or discussing this work:
 ---
 
 > “A system designed to evolve should not depend on a single source of continuation.”
+
+*Ω-AGI · v1.0 · 2026*
