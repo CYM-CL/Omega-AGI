@@ -1,0 +1,10 @@
+DaggerCategory -> MonoidalCategory
+MonoidalCategory -> CompactClosedCategory
+State -> Process
+Effect -> Process
+Process -> TensorProduct
+BellState -> TensorProduct
+CPMConstruction -> DaggerCategory
+Trace -> CompactClosedCategory
+QuantumTeleportation -> BellState
+NoCloning -> State

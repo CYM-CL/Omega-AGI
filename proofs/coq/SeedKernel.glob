@@ -1,0 +1,276 @@
+DIGEST 14f00487478b147f003fef723258cffe
+FSeedKernel
+R27:37 Stdlib.Arith.Arith <> <> lib
+R67:80 Stdlib.Arith.PeanoNat <> <> lib
+R110:112 Stdlib.micromega.Lia <> <> lib
+mod 123:134 <> OmegaFalling
+def 149:153 OmegaFalling delta
+R162:164 Corelib.Init.Datatypes <> nat ind
+binder 156:156 <> x:1
+binder 158:158 <> y:2
+R169:171 Corelib.Init.Datatypes <> nat ind
+R177:179 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R176:176 SeedKernel <> x:1 var
+R180:180 SeedKernel <> y:2 var
+def 194:197 OmegaFalling join
+R206:208 Corelib.Init.Datatypes <> nat ind
+binder 200:200 <> x:3
+binder 202:202 <> y:4
+R213:215 Corelib.Init.Datatypes <> nat ind
+R220:226 Stdlib.Arith.PeanoNat Nat max def
+R228:228 SeedKernel <> x:3 var
+R230:230 SeedKernel <> y:4 var
+def 244:247 OmegaFalling meet
+R256:258 Corelib.Init.Datatypes <> nat ind
+binder 250:250 <> x:5
+binder 252:252 <> y:6
+R263:265 Corelib.Init.Datatypes <> nat ind
+R270:276 Stdlib.Arith.PeanoNat Nat min def
+R278:278 SeedKernel <> x:5 var
+R280:280 SeedKernel <> y:6 var
+def 294:304 OmegaFalling free_energy
+R323:325 Corelib.Init.Datatypes <> nat ind
+binder 307:309 <> fit:7
+binder 311:314 <> comp:8
+binder 316:319 <> cons:9
+R330:332 Corelib.Init.Datatypes <> nat ind
+R347:349 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R340:342 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R337:339 SeedKernel <> fit:7 var
+R343:346 SeedKernel <> comp:8 var
+R350:353 SeedKernel <> cons:9 var
+def 367:386 OmegaFalling morphism_comp_weight
+R395:397 Corelib.Init.Datatypes <> nat ind
+binder 389:389 <> f:10
+binder 391:391 <> g:11
+R402:404 Corelib.Init.Datatypes <> nat ind
+R409:412 SeedKernel OmegaFalling meet def
+R414:414 SeedKernel <> f:10 var
+R416:416 SeedKernel <> g:11 var
+def 430:450 OmegaFalling morphism2_comp_weight
+R466:468 Corelib.Init.Datatypes <> nat ind
+binder 453:457 <> alpha:12
+binder 459:462 <> beta:13
+R473:475 Corelib.Init.Datatypes <> nat ind
+R480:483 SeedKernel OmegaFalling join def
+R485:489 SeedKernel <> alpha:12 var
+R491:494 SeedKernel <> beta:13 var
+ind 508:525 OmegaFalling modification_level
+constr 532:538 OmegaFalling L1Micro
+constr 542:547 OmegaFalling L2Rule
+constr 551:558 OmegaFalling L3Syntax
+constr 562:568 OmegaFalling L4Axiom
+scheme 508:525 OmegaFalling modification_level_rect
+scheme 508:525 OmegaFalling modification_level_ind
+scheme 508:525 OmegaFalling modification_level_rec
+scheme 508:525 OmegaFalling modification_level_sind
+def 583:600 OmegaFalling permission_allowed
+R629:632 Corelib.Init.Datatypes <> bool ind
+binder 603:610 <> shutdown:16
+binder 612:617 <> paused:17
+binder 619:625 <> auto_l3:18
+R644:661 SeedKernel OmegaFalling modification_level ind
+binder 636:640 <> level:19
+R666:669 Corelib.Init.Datatypes <> bool ind
+R700:704 SeedKernel <> level:19 var
+R692:697 SeedKernel <> paused:17 var
+R682:689 SeedKernel <> shutdown:16 var
+R715:718 Corelib.Init.Datatypes <> true constr
+R729:733 Corelib.Init.Datatypes <> false constr
+R739:743 Corelib.Init.Datatypes <> false constr
+R746:749 Corelib.Init.Datatypes <> true constr
+R752:758 SeedKernel OmegaFalling L1Micro constr
+R763:766 Corelib.Init.Datatypes <> true constr
+R772:776 Corelib.Init.Datatypes <> false constr
+R779:782 Corelib.Init.Datatypes <> true constr
+R790:794 Corelib.Init.Datatypes <> false constr
+R800:804 Corelib.Init.Datatypes <> false constr
+R807:811 Corelib.Init.Datatypes <> false constr
+R814:820 SeedKernel OmegaFalling L1Micro constr
+R825:828 Corelib.Init.Datatypes <> true constr
+R834:838 Corelib.Init.Datatypes <> false constr
+R841:845 Corelib.Init.Datatypes <> false constr
+R848:853 SeedKernel OmegaFalling L2Rule constr
+R858:861 Corelib.Init.Datatypes <> true constr
+R867:871 Corelib.Init.Datatypes <> false constr
+R874:878 Corelib.Init.Datatypes <> false constr
+R881:888 SeedKernel OmegaFalling L3Syntax constr
+R893:899 SeedKernel <> auto_l3:18 var
+R905:909 Corelib.Init.Datatypes <> false constr
+R912:916 Corelib.Init.Datatypes <> false constr
+R919:925 SeedKernel OmegaFalling L4Axiom constr
+R930:934 Corelib.Init.Datatypes <> false constr
+prf 952:968 OmegaFalling delta_nonnegative
+binder 979:979 <> x:23
+binder 981:981 <> y:24
+R985:988 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R989:993 SeedKernel OmegaFalling delta def
+R995:995 SeedKernel <> x:23 var
+R997:997 SeedKernel <> y:24 var
+R1024:1028 SeedKernel OmegaFalling delta def
+R1037:1046 Stdlib.Arith.PeanoNat Nat le_0_l thm
+R1037:1046 Stdlib.Arith.PeanoNat Nat le_0_l thm
+prf 1063:1078 OmegaFalling join_commutative
+binder 1089:1089 <> x:25
+binder 1091:1091 <> y:26
+R1102:1104 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1094:1097 SeedKernel OmegaFalling join def
+R1099:1099 SeedKernel <> x:25 var
+R1101:1101 SeedKernel <> y:26 var
+R1105:1108 SeedKernel OmegaFalling join def
+R1110:1110 SeedKernel <> y:26 var
+R1112:1112 SeedKernel <> x:25 var
+R1139:1142 SeedKernel OmegaFalling join def
+R1151:1162 Stdlib.Arith.PeanoNat Nat max_comm thm
+R1151:1162 Stdlib.Arith.PeanoNat Nat max_comm thm
+prf 1179:1194 OmegaFalling meet_commutative
+binder 1205:1205 <> x:27
+binder 1207:1207 <> y:28
+R1218:1220 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1210:1213 SeedKernel OmegaFalling meet def
+R1215:1215 SeedKernel <> x:27 var
+R1217:1217 SeedKernel <> y:28 var
+R1221:1224 SeedKernel OmegaFalling meet def
+R1226:1226 SeedKernel <> y:28 var
+R1228:1228 SeedKernel <> x:27 var
+R1255:1258 SeedKernel OmegaFalling meet def
+R1267:1278 Stdlib.Arith.PeanoNat Nat min_comm thm
+R1267:1278 Stdlib.Arith.PeanoNat Nat min_comm thm
+prf 1295:1317 OmegaFalling free_energy_nonnegative
+binder 1328:1330 <> fit:29
+binder 1332:1335 <> comp:30
+binder 1337:1340 <> cons:31
+R1344:1347 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1348:1358 SeedKernel OmegaFalling free_energy def
+R1360:1362 SeedKernel <> fit:29 var
+R1364:1367 SeedKernel <> comp:30 var
+R1369:1372 SeedKernel <> cons:31 var
+R1399:1409 SeedKernel OmegaFalling free_energy def
+R1418:1427 Stdlib.Arith.PeanoNat Nat le_0_l thm
+R1418:1427 Stdlib.Arith.PeanoNat Nat le_0_l thm
+prf 1444:1461 OmegaFalling free_energy_ge_fit
+binder 1472:1474 <> fit:32
+binder 1476:1479 <> comp:33
+binder 1481:1484 <> cons:34
+R1490:1493 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1487:1489 SeedKernel <> fit:32 var
+R1494:1504 SeedKernel OmegaFalling free_energy def
+R1506:1508 SeedKernel <> fit:32 var
+R1510:1513 SeedKernel <> comp:33 var
+R1515:1518 SeedKernel <> cons:34 var
+R1545:1555 SeedKernel OmegaFalling free_energy def
+prf 1577:1595 OmegaFalling free_energy_ge_comp
+binder 1606:1608 <> fit:35
+binder 1610:1613 <> comp:36
+binder 1615:1618 <> cons:37
+R1625:1628 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1621:1624 SeedKernel <> comp:36 var
+R1629:1639 SeedKernel OmegaFalling free_energy def
+R1641:1643 SeedKernel <> fit:35 var
+R1645:1648 SeedKernel <> comp:36 var
+R1650:1653 SeedKernel <> cons:37 var
+R1680:1690 SeedKernel OmegaFalling free_energy def
+prf 1712:1730 OmegaFalling free_energy_ge_cons
+binder 1741:1743 <> fit:38
+binder 1745:1748 <> comp:39
+binder 1750:1753 <> cons:40
+R1760:1763 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1756:1759 SeedKernel <> cons:40 var
+R1764:1774 SeedKernel OmegaFalling free_energy def
+R1776:1778 SeedKernel <> fit:38 var
+R1780:1783 SeedKernel <> comp:39 var
+R1785:1788 SeedKernel <> cons:40 var
+R1815:1825 SeedKernel OmegaFalling free_energy def
+prf 1847:1867 OmegaFalling morphism_comp_le_left
+binder 1878:1878 <> f:41
+binder 1880:1880 <> g:42
+R1907:1910 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1883:1902 SeedKernel OmegaFalling morphism_comp_weight def
+R1904:1904 SeedKernel <> f:41 var
+R1906:1906 SeedKernel <> g:42 var
+R1911:1911 SeedKernel <> f:41 var
+R1938:1957 SeedKernel OmegaFalling morphism_comp_weight def
+R1960:1963 SeedKernel OmegaFalling meet def
+prf 1985:2006 OmegaFalling morphism_comp_le_right
+binder 2017:2017 <> f:43
+binder 2019:2019 <> g:44
+R2046:2049 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R2022:2041 SeedKernel OmegaFalling morphism_comp_weight def
+R2043:2043 SeedKernel <> f:43 var
+R2045:2045 SeedKernel <> g:44 var
+R2050:2050 SeedKernel <> g:44 var
+R2077:2096 SeedKernel OmegaFalling morphism_comp_weight def
+R2099:2102 SeedKernel OmegaFalling meet def
+prf 2124:2145 OmegaFalling morphism2_comp_ge_left
+binder 2156:2160 <> alpha:45
+binder 2162:2165 <> beta:46
+R2173:2176 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R2168:2172 SeedKernel <> alpha:45 var
+R2177:2197 SeedKernel OmegaFalling morphism2_comp_weight def
+R2199:2203 SeedKernel <> alpha:45 var
+R2205:2208 SeedKernel <> beta:46 var
+R2235:2255 SeedKernel OmegaFalling morphism2_comp_weight def
+R2258:2261 SeedKernel OmegaFalling join def
+prf 2283:2305 OmegaFalling morphism2_comp_ge_right
+binder 2316:2320 <> alpha:47
+binder 2322:2325 <> beta:48
+R2332:2335 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R2328:2331 SeedKernel <> beta:48 var
+R2336:2356 SeedKernel OmegaFalling morphism2_comp_weight def
+R2358:2362 SeedKernel <> alpha:47 var
+R2364:2367 SeedKernel <> beta:48 var
+R2394:2414 SeedKernel OmegaFalling morphism2_comp_weight def
+R2417:2420 SeedKernel OmegaFalling join def
+prf 2442:2459 OmegaFalling l4_axiom_forbidden
+binder 2470:2477 <> shutdown:49
+binder 2479:2484 <> paused:50
+binder 2486:2492 <> auto_l3:51
+R2547:2549 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2497:2514 SeedKernel OmegaFalling permission_allowed def
+R2516:2523 SeedKernel <> shutdown:49 var
+R2525:2530 SeedKernel <> paused:50 var
+R2532:2538 SeedKernel <> auto_l3:51 var
+R2540:2546 SeedKernel OmegaFalling L4Axiom constr
+R2550:2554 Corelib.Init.Datatypes <> false constr
+prf 2628:2647 OmegaFalling shutdown_forbids_all
+binder 2658:2663 <> paused:52
+binder 2665:2671 <> auto_l3:53
+binder 2673:2677 <> level:54
+R2726:2728 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2682:2699 SeedKernel OmegaFalling permission_allowed def
+R2701:2704 Corelib.Init.Datatypes <> true constr
+R2706:2711 SeedKernel <> paused:52 var
+R2713:2719 SeedKernel <> auto_l3:53 var
+R2721:2725 SeedKernel <> level:54 var
+R2729:2733 Corelib.Init.Datatypes <> false constr
+prf 2804:2824 OmegaFalling paused_forbids_non_l1
+binder 2835:2841 <> auto_l3:55
+binder 2843:2847 <> level:56
+R2868:2873 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2857:2860 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2852:2856 SeedKernel <> level:56 var
+R2861:2867 SeedKernel OmegaFalling L1Micro constr
+R2917:2919 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2874:2891 SeedKernel OmegaFalling permission_allowed def
+R2893:2897 Corelib.Init.Datatypes <> false constr
+R2899:2902 Corelib.Init.Datatypes <> true constr
+R2904:2910 SeedKernel <> auto_l3:55 var
+R2912:2916 SeedKernel <> level:56 var
+R2920:2924 Corelib.Init.Datatypes <> false constr
+prf 3006:3030 OmegaFalling l3_requires_authorization
+R3089:3094 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3081:3083 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3036:3053 SeedKernel OmegaFalling permission_allowed def
+R3055:3059 Corelib.Init.Datatypes <> false constr
+R3061:3065 Corelib.Init.Datatypes <> false constr
+R3067:3071 Corelib.Init.Datatypes <> false constr
+R3073:3080 SeedKernel OmegaFalling L3Syntax constr
+R3084:3088 Corelib.Init.Datatypes <> false constr
+R3139:3141 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3095:3112 SeedKernel OmegaFalling permission_allowed def
+R3114:3118 Corelib.Init.Datatypes <> false constr
+R3120:3124 Corelib.Init.Datatypes <> false constr
+R3126:3129 Corelib.Init.Datatypes <> true constr
+R3131:3138 SeedKernel OmegaFalling L3Syntax constr
+R3142:3145 Corelib.Init.Datatypes <> true constr
+R3187:3198 SeedKernel OmegaFalling <> mod

@@ -1,0 +1,313 @@
+DIGEST 278365189745026eae21911eea65df49
+FLatticeCodeIsomorphism
+R27:37 Stdlib.Arith.Arith <> <> lib
+R67:80 Stdlib.Arith.PeanoNat <> <> lib
+R110:112 Stdlib.micromega.Lia <> <> lib
+mod 210:232 <> OmegaFallingLatticeCode
+def 247:250 OmegaFallingLatticeCode join
+R259:261 Corelib.Init.Datatypes <> nat ind
+binder 253:253 <> x:1
+binder 255:255 <> y:2
+R266:268 Corelib.Init.Datatypes <> nat ind
+R273:279 Stdlib.Arith.PeanoNat Nat max def
+R281:281 LatticeCodeIsomorphism <> x:1 var
+R283:283 LatticeCodeIsomorphism <> y:2 var
+def 297:300 OmegaFallingLatticeCode meet
+R309:311 Corelib.Init.Datatypes <> nat ind
+binder 303:303 <> x:3
+binder 305:305 <> y:4
+R316:318 Corelib.Init.Datatypes <> nat ind
+R323:329 Stdlib.Arith.PeanoNat Nat min def
+R331:331 LatticeCodeIsomorphism <> x:3 var
+R333:333 LatticeCodeIsomorphism <> y:4 var
+def 347:355 OmegaFallingLatticeCode code_join
+R364:366 Corelib.Init.Datatypes <> nat ind
+binder 358:358 <> x:5
+binder 360:360 <> y:6
+R371:373 Corelib.Init.Datatypes <> nat ind
+R378:384 Stdlib.Arith.PeanoNat Nat max def
+R386:386 LatticeCodeIsomorphism <> x:5 var
+R388:388 LatticeCodeIsomorphism <> y:6 var
+def 402:410 OmegaFallingLatticeCode code_meet
+R419:421 Corelib.Init.Datatypes <> nat ind
+binder 413:413 <> x:7
+binder 415:415 <> y:8
+R426:428 Corelib.Init.Datatypes <> nat ind
+R433:439 Stdlib.Arith.PeanoNat Nat min def
+R441:441 LatticeCodeIsomorphism <> x:7 var
+R443:443 LatticeCodeIsomorphism <> y:8 var
+def 457:461 OmegaFallingLatticeCode delta
+R470:472 Corelib.Init.Datatypes <> nat ind
+binder 464:464 <> x:9
+binder 466:466 <> y:10
+R477:479 Corelib.Init.Datatypes <> nat ind
+R484:490 Stdlib.Arith.PeanoNat Nat sub def
+R492:492 LatticeCodeIsomorphism <> x:9 var
+R494:494 LatticeCodeIsomorphism <> y:10 var
+def 508:510 OmegaFallingLatticeCode phi
+R517:519 Corelib.Init.Datatypes <> nat ind
+binder 513:513 <> x:11
+R524:526 Corelib.Init.Datatypes <> nat ind
+R531:531 LatticeCodeIsomorphism <> x:11 var
+prf 572:584 OmegaFallingLatticeCode phi_injective
+binder 595:595 <> x:12
+binder 597:597 <> y:13
+R613:616 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R605:607 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R600:602 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R604:604 LatticeCodeIsomorphism <> x:12 var
+R608:610 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R612:612 LatticeCodeIsomorphism <> y:13 var
+R618:620 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R617:617 LatticeCodeIsomorphism <> x:12 var
+R621:621 LatticeCodeIsomorphism <> y:13 var
+R648:650 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+prf 684:697 OmegaFallingLatticeCode phi_surjective
+binder 708:708 <> y:14
+R711:717 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R719:720 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 718:718 <> x:15
+R726:728 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R721:723 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R725:725 LatticeCodeIsomorphism <> x:15 var
+R729:729 LatticeCodeIsomorphism <> y:14 var
+R766:768 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+prf 830:847 OmegaFallingLatticeCode phi_preserves_join
+binder 858:858 <> x:16
+binder 860:860 <> y:17
+R877:879 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R863:865 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R868:871 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R873:873 LatticeCodeIsomorphism <> x:16 var
+R875:875 LatticeCodeIsomorphism <> y:17 var
+R880:888 LatticeCodeIsomorphism OmegaFallingLatticeCode code_join def
+R891:893 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R895:895 LatticeCodeIsomorphism <> x:16 var
+R899:901 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R903:903 LatticeCodeIsomorphism <> y:17 var
+R931:933 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R936:939 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R942:950 LatticeCodeIsomorphism OmegaFallingLatticeCode code_join def
+prf 980:997 OmegaFallingLatticeCode phi_preserves_meet
+binder 1008:1008 <> x:18
+binder 1010:1010 <> y:19
+R1027:1029 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1013:1015 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1018:1021 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R1023:1023 LatticeCodeIsomorphism <> x:18 var
+R1025:1025 LatticeCodeIsomorphism <> y:19 var
+R1030:1038 LatticeCodeIsomorphism OmegaFallingLatticeCode code_meet def
+R1041:1043 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1045:1045 LatticeCodeIsomorphism <> x:18 var
+R1049:1051 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1053:1053 LatticeCodeIsomorphism <> y:19 var
+R1081:1083 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1086:1089 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R1092:1100 LatticeCodeIsomorphism OmegaFallingLatticeCode code_meet def
+prf 1130:1148 OmegaFallingLatticeCode phi_preserves_delta
+binder 1159:1159 <> x:20
+binder 1161:1161 <> y:21
+R1179:1181 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1164:1166 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1169:1173 LatticeCodeIsomorphism OmegaFallingLatticeCode delta def
+R1175:1175 LatticeCodeIsomorphism <> x:20 var
+R1177:1177 LatticeCodeIsomorphism <> y:21 var
+R1182:1186 LatticeCodeIsomorphism OmegaFallingLatticeCode delta def
+R1189:1191 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1193:1193 LatticeCodeIsomorphism <> x:20 var
+R1197:1199 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1201:1201 LatticeCodeIsomorphism <> y:21 var
+R1229:1231 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1234:1238 LatticeCodeIsomorphism OmegaFallingLatticeCode delta def
+prf 1303:1326 OmegaFallingLatticeCode lattice_code_isomorphism
+R1333:1333 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1368:1374 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 1341:1341 <> x:22
+binder 1343:1343 <> y:23
+R1359:1362 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1351:1353 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1346:1348 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1350:1350 LatticeCodeIsomorphism <> x:22 var
+R1354:1356 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1358:1358 LatticeCodeIsomorphism <> y:23 var
+R1364:1366 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1363:1363 LatticeCodeIsomorphism <> x:22 var
+R1367:1367 LatticeCodeIsomorphism <> y:23 var
+R1375:1375 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1405:1411 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 1383:1383 <> y:24
+R1386:1392 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1394:1395 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 1393:1393 <> x:25
+R1401:1403 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1396:1398 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1400:1400 LatticeCodeIsomorphism <> x:25 var
+R1404:1404 LatticeCodeIsomorphism <> y:24 var
+R1412:1412 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1467:1473 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 1420:1420 <> x:26
+binder 1422:1422 <> y:27
+R1439:1441 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1425:1427 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1430:1433 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R1435:1435 LatticeCodeIsomorphism <> x:26 var
+R1437:1437 LatticeCodeIsomorphism <> y:27 var
+R1442:1450 LatticeCodeIsomorphism OmegaFallingLatticeCode code_join def
+R1453:1455 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1457:1457 LatticeCodeIsomorphism <> x:26 var
+R1461:1463 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1465:1465 LatticeCodeIsomorphism <> y:27 var
+R1474:1474 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1529:1536 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1588:1588 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 1482:1482 <> x:28
+binder 1484:1484 <> y:29
+R1501:1503 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1487:1489 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1492:1495 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R1497:1497 LatticeCodeIsomorphism <> x:28 var
+R1499:1499 LatticeCodeIsomorphism <> y:29 var
+R1504:1512 LatticeCodeIsomorphism OmegaFallingLatticeCode code_meet def
+R1515:1517 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1519:1519 LatticeCodeIsomorphism <> x:28 var
+R1523:1525 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1527:1527 LatticeCodeIsomorphism <> y:29 var
+binder 1544:1544 <> x:30
+binder 1546:1546 <> y:31
+R1564:1566 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1549:1551 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1554:1558 LatticeCodeIsomorphism OmegaFallingLatticeCode delta def
+R1560:1560 LatticeCodeIsomorphism <> x:30 var
+R1562:1562 LatticeCodeIsomorphism <> y:31 var
+R1567:1571 LatticeCodeIsomorphism OmegaFallingLatticeCode delta def
+R1574:1576 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1578:1578 LatticeCodeIsomorphism <> x:30 var
+R1582:1584 LatticeCodeIsomorphism OmegaFallingLatticeCode phi def
+R1586:1586 LatticeCodeIsomorphism <> y:31 var
+R1613:1625 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_injective thm
+R1613:1625 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_injective thm
+R1643:1656 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_surjective thm
+R1643:1656 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_surjective thm
+R1674:1691 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_preserves_join thm
+R1674:1691 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_preserves_join thm
+R1709:1726 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_preserves_meet thm
+R1709:1726 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_preserves_meet thm
+R1737:1755 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_preserves_delta thm
+R1737:1755 LatticeCodeIsomorphism OmegaFallingLatticeCode phi_preserves_delta thm
+prf 1804:1819 OmegaFallingLatticeCode join_commutative
+binder 1830:1830 <> x:32
+binder 1832:1832 <> y:33
+R1843:1845 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1835:1838 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R1840:1840 LatticeCodeIsomorphism <> x:32 var
+R1842:1842 LatticeCodeIsomorphism <> y:33 var
+R1846:1849 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R1851:1851 LatticeCodeIsomorphism <> y:33 var
+R1853:1853 LatticeCodeIsomorphism <> x:32 var
+R1880:1883 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+prf 1905:1920 OmegaFallingLatticeCode meet_commutative
+binder 1931:1931 <> x:34
+binder 1933:1933 <> y:35
+R1944:1946 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1936:1939 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R1941:1941 LatticeCodeIsomorphism <> x:34 var
+R1943:1943 LatticeCodeIsomorphism <> y:35 var
+R1947:1950 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R1952:1952 LatticeCodeIsomorphism <> y:35 var
+R1954:1954 LatticeCodeIsomorphism <> x:34 var
+R1981:1984 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+prf 2006:2021 OmegaFallingLatticeCode join_associative
+binder 2032:2032 <> x:36
+binder 2034:2034 <> y:37
+binder 2036:2036 <> z:38
+R2056:2058 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2039:2042 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2045:2048 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2050:2050 LatticeCodeIsomorphism <> x:36 var
+R2052:2052 LatticeCodeIsomorphism <> y:37 var
+R2055:2055 LatticeCodeIsomorphism <> z:38 var
+R2059:2062 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2064:2064 LatticeCodeIsomorphism <> x:36 var
+R2067:2070 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2072:2072 LatticeCodeIsomorphism <> y:37 var
+R2074:2074 LatticeCodeIsomorphism <> z:38 var
+R2102:2105 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+prf 2127:2142 OmegaFallingLatticeCode meet_associative
+binder 2153:2153 <> x:39
+binder 2155:2155 <> y:40
+binder 2157:2157 <> z:41
+R2177:2179 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2160:2163 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2166:2169 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2171:2171 LatticeCodeIsomorphism <> x:39 var
+R2173:2173 LatticeCodeIsomorphism <> y:40 var
+R2176:2176 LatticeCodeIsomorphism <> z:41 var
+R2180:2183 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2185:2185 LatticeCodeIsomorphism <> x:39 var
+R2188:2191 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2193:2193 LatticeCodeIsomorphism <> y:40 var
+R2195:2195 LatticeCodeIsomorphism <> z:41 var
+R2223:2226 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+prf 2248:2262 OmegaFallingLatticeCode join_idempotent
+binder 2273:2273 <> x:42
+R2284:2286 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2276:2279 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2281:2281 LatticeCodeIsomorphism <> x:42 var
+R2283:2283 LatticeCodeIsomorphism <> x:42 var
+R2287:2287 LatticeCodeIsomorphism <> x:42 var
+R2314:2317 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+prf 2339:2353 OmegaFallingLatticeCode meet_idempotent
+binder 2364:2364 <> x:43
+R2375:2377 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2367:2370 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2372:2372 LatticeCodeIsomorphism <> x:43 var
+R2374:2374 LatticeCodeIsomorphism <> x:43 var
+R2378:2378 LatticeCodeIsomorphism <> x:43 var
+R2405:2408 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+prf 2446:2465 OmegaFallingLatticeCode absorption_join_meet
+binder 2476:2476 <> x:44
+binder 2478:2478 <> y:45
+R2498:2500 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2481:2484 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2486:2486 LatticeCodeIsomorphism <> x:44 var
+R2489:2492 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2494:2494 LatticeCodeIsomorphism <> x:44 var
+R2496:2496 LatticeCodeIsomorphism <> y:45 var
+R2501:2501 LatticeCodeIsomorphism <> x:44 var
+R2528:2531 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2534:2537 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+prf 2559:2578 OmegaFallingLatticeCode absorption_meet_join
+binder 2589:2589 <> x:46
+binder 2591:2591 <> y:47
+R2611:2613 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2594:2597 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+R2599:2599 LatticeCodeIsomorphism <> x:46 var
+R2602:2605 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2607:2607 LatticeCodeIsomorphism <> x:46 var
+R2609:2609 LatticeCodeIsomorphism <> y:47 var
+R2614:2614 LatticeCodeIsomorphism <> x:46 var
+R2641:2644 LatticeCodeIsomorphism OmegaFallingLatticeCode join def
+R2647:2650 LatticeCodeIsomorphism OmegaFallingLatticeCode meet def
+prf 2716:2736 OmegaFallingLatticeCode code_join_commutative
+binder 2747:2747 <> x:48
+binder 2749:2749 <> y:49
+R2765:2767 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2752:2760 LatticeCodeIsomorphism OmegaFallingLatticeCode code_join def
+R2762:2762 LatticeCodeIsomorphism <> x:48 var
+R2764:2764 LatticeCodeIsomorphism <> y:49 var
+R2768:2776 LatticeCodeIsomorphism OmegaFallingLatticeCode code_join def
+R2778:2778 LatticeCodeIsomorphism <> y:49 var
+R2780:2780 LatticeCodeIsomorphism <> x:48 var
+R2807:2815 LatticeCodeIsomorphism OmegaFallingLatticeCode code_join def
+prf 2837:2857 OmegaFallingLatticeCode code_meet_commutative
+binder 2868:2868 <> x:50
+binder 2870:2870 <> y:51
+R2886:2888 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2873:2881 LatticeCodeIsomorphism OmegaFallingLatticeCode code_meet def
+R2883:2883 LatticeCodeIsomorphism <> x:50 var
+R2885:2885 LatticeCodeIsomorphism <> y:51 var
+R2889:2897 LatticeCodeIsomorphism OmegaFallingLatticeCode code_meet def
+R2899:2899 LatticeCodeIsomorphism <> y:51 var
+R2901:2901 LatticeCodeIsomorphism <> x:50 var
+R2928:2936 LatticeCodeIsomorphism OmegaFallingLatticeCode code_meet def
+R2954:2976 LatticeCodeIsomorphism OmegaFallingLatticeCode <> mod

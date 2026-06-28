@@ -1,0 +1,22 @@
+{
+  "name": "CL-SCT+ 统一Δ压力训练计划",
+  "version": "5.0.0",
+  "description": "Ω-落尘AGI基底训练计划：Δ复杂度驱动，无能力域划分",
+  "phases": [
+    {"phase": "L1_RuleSolidification", "step_count": 300, "base_param_range_start": 1, "base_param_range_end": 20, "bootstrap_interval": 10, "consensus_target": 0.950000},
+    {"phase": "L2_SandboxBootstrap", "step_count": 300, "base_param_range_start": 1, "base_param_range_end": 20, "bootstrap_interval": 10, "consensus_target": 0.930000},
+    {"phase": "L3_FullFusion", "step_count": 300, "base_param_range_start": 1, "base_param_range_end": 20, "bootstrap_interval": 10, "consensus_target": 0.950000}
+  ],
+  "complexity_configs": [
+    {"complexity": "Level_2", "consensus_target": 0.950000, "max_steps": 0, "min_steps": 0},
+    {"complexity": "Level_4", "consensus_target": 0.950000, "max_steps": 0, "min_steps": 0},
+    {"complexity": "Level_1", "consensus_target": 0.950000, "max_steps": 0, "min_steps": 0},
+    {"complexity": "Level_3", "consensus_target": 0.950000, "max_steps": 0, "min_steps": 0}
+  ],
+  "total_max_steps": 1800,
+  "eval_interval": 50,
+  "checkpoint_interval": 100,
+  "early_stop_patience": 0,
+  "stability_test_steps": 1000,
+  "stability_check_interval": 100
+}

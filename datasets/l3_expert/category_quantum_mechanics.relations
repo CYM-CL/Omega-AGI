@@ -1,0 +1,5 @@
+DaggerCategory|domain|CategoricalQM|level=0|coords=process,adjoint
+CompactClosedCategory|supports|TeleportationDiagram|level=2|coords=duality,tensor
+CPMConstruction|lifts|DaggerCategory|level=2|coords=mixed_state,process
+Trace|measures|Process|level=2|coords=feedback,loop
+NoCloning|constrains|State|level=3|coords=logic,quantum,security

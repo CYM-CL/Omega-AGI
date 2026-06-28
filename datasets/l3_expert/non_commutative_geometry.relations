@@ -1,0 +1,5 @@
+CStarAlgebra|domain|OperatorAlgebra|level=0|coords=algebra,analysis
+SpectralTriple|depends_on|CStarAlgebra|level=1|coords=geometry,analysis,time
+DiracOperator|constrains|SpectralTriple|level=2|coords=differential,spectrum
+KTheoryClass|classifies|CStarAlgebra|level=2|coords=topology,algebra
+NCGMetric|measures|NonCommutativeSpace|level=3|coords=metric,geometry

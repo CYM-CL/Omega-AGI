@@ -1,0 +1,10 @@
+Category -> Functor
+Functor -> NaturalTransformation
+Category -> Presheaf
+Presheaf -> Sheaf
+Sheaf -> GrothendieckTopology
+ElementaryTopos -> SubobjectClassifier
+ElementaryTopos -> Exponentials
+ElementaryTopos -> FiniteLimits
+GeometricMorphism -> ToposTheory
+InternalLogic -> SubobjectClassifier

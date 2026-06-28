@@ -1,0 +1,183 @@
+DIGEST 6e6fe194ea41c3a59af9027a6fa48050
+FCCCStructure
+R27:37 Stdlib.Arith.Arith <> <> lib
+R67:80 Stdlib.Arith.PeanoNat <> <> lib
+R110:112 Stdlib.micromega.Lia <> <> lib
+mod 289:303 <> OmegaFallingCCC
+def 318:322 OmegaFallingCCC M_val
+R326:328 Corelib.Init.Datatypes <> nat ind
+def 349:353 OmegaFallingCCC Omega
+R358:360 Corelib.Init.Datatypes <> nat ind
+def 375:389 OmegaFallingCCC terminal_object
+R393:397 CCCStructure OmegaFallingCCC Omega def
+R402:406 CCCStructure OmegaFallingCCC M_val def
+def 420:426 OmegaFallingCCC product
+R435:439 CCCStructure OmegaFallingCCC Omega def
+binder 429:429 <> x:1
+binder 431:431 <> y:2
+R444:448 CCCStructure OmegaFallingCCC Omega def
+R453:459 Stdlib.Arith.PeanoNat Nat min def
+R461:461 CCCStructure <> x:1 var
+R463:463 CCCStructure <> y:2 var
+def 477:487 OmegaFallingCCC exponential
+R496:500 CCCStructure OmegaFallingCCC Omega def
+binder 490:490 <> x:3
+binder 492:492 <> y:4
+R505:509 CCCStructure OmegaFallingCCC Omega def
+R514:520 Stdlib.Arith.PeanoNat Nat min def
+R522:522 CCCStructure <> y:4 var
+R524:528 CCCStructure OmegaFallingCCC M_val def
+def 542:546 OmegaFallingCCC delta
+R555:559 CCCStructure OmegaFallingCCC Omega def
+binder 549:549 <> x:5
+binder 551:551 <> y:6
+R564:568 CCCStructure OmegaFallingCCC Omega def
+R573:579 Stdlib.Arith.PeanoNat Nat sub def
+R581:581 CCCStructure <> x:5 var
+R583:583 CCCStructure <> y:6 var
+prf 630:644 OmegaFallingCCC terminal_is_max
+binder 655:655 <> x:7
+R678:681 Corelib.Init.Logic <> ::type_scope:x_'\/'_x not
+R659:662 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R658:658 CCCStructure <> x:7 var
+R663:677 CCCStructure OmegaFallingCCC terminal_object def
+R683:685 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R682:682 CCCStructure <> x:7 var
+R686:700 CCCStructure OmegaFallingCCC terminal_object def
+R727:741 CCCStructure OmegaFallingCCC terminal_object def
+R744:748 CCCStructure OmegaFallingCCC M_val def
+prf 802:824 OmegaFallingCCC product_projection_left
+binder 835:835 <> x:8
+binder 837:837 <> y:9
+R851:854 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R840:846 CCCStructure OmegaFallingCCC product def
+R848:848 CCCStructure <> x:8 var
+R850:850 CCCStructure <> y:9 var
+R855:855 CCCStructure <> x:8 var
+R882:888 CCCStructure OmegaFallingCCC product def
+prf 910:933 OmegaFallingCCC product_projection_right
+binder 944:944 <> x:10
+binder 946:946 <> y:11
+R960:963 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R949:955 CCCStructure OmegaFallingCCC product def
+R957:957 CCCStructure <> x:10 var
+R959:959 CCCStructure <> y:11 var
+R964:964 CCCStructure <> y:11 var
+R991:997 CCCStructure OmegaFallingCCC product def
+prf 1019:1035 OmegaFallingCCC product_universal
+binder 1046:1046 <> x:12
+binder 1048:1048 <> y:13
+binder 1050:1050 <> z:14
+R1059:1062 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1054:1057 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1053:1053 CCCStructure <> z:14 var
+R1058:1058 CCCStructure <> x:12 var
+R1069:1072 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1064:1067 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1063:1063 CCCStructure <> z:14 var
+R1068:1068 CCCStructure <> y:13 var
+R1074:1077 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1073:1073 CCCStructure <> z:14 var
+R1078:1084 CCCStructure OmegaFallingCCC product def
+R1086:1086 CCCStructure <> x:12 var
+R1088:1088 CCCStructure <> y:13 var
+R1115:1121 CCCStructure OmegaFallingCCC product def
+prf 1143:1161 OmegaFallingCCC product_commutative
+binder 1172:1172 <> x:15
+binder 1174:1174 <> y:16
+R1188:1190 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1177:1183 CCCStructure OmegaFallingCCC product def
+R1185:1185 CCCStructure <> x:15 var
+R1187:1187 CCCStructure <> y:16 var
+R1191:1197 CCCStructure OmegaFallingCCC product def
+R1199:1199 CCCStructure <> y:16 var
+R1201:1201 CCCStructure <> x:15 var
+R1228:1234 CCCStructure OmegaFallingCCC product def
+prf 1256:1273 OmegaFallingCCC product_idempotent
+binder 1284:1284 <> x:17
+R1298:1300 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1287:1293 CCCStructure OmegaFallingCCC product def
+R1295:1295 CCCStructure <> x:17 var
+R1297:1297 CCCStructure <> x:17 var
+R1301:1301 CCCStructure <> x:17 var
+R1328:1334 CCCStructure OmegaFallingCCC product def
+prf 1391:1413 OmegaFallingCCC exponential_nonnegative
+binder 1424:1424 <> x:18
+binder 1426:1426 <> y:19
+R1444:1447 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R1429:1439 CCCStructure OmegaFallingCCC exponential def
+R1441:1441 CCCStructure <> x:18 var
+R1443:1443 CCCStructure <> y:19 var
+R1475:1485 CCCStructure OmegaFallingCCC exponential def
+prf 1507:1529 OmegaFallingCCC exponential_le_terminal
+binder 1540:1540 <> x:20
+binder 1542:1542 <> y:21
+R1560:1563 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1545:1555 CCCStructure OmegaFallingCCC exponential def
+R1557:1557 CCCStructure <> x:20 var
+R1559:1559 CCCStructure <> y:21 var
+R1564:1578 CCCStructure OmegaFallingCCC terminal_object def
+R1605:1615 CCCStructure OmegaFallingCCC exponential def
+R1618:1632 CCCStructure OmegaFallingCCC terminal_object def
+R1635:1639 CCCStructure OmegaFallingCCC M_val def
+prf 1706:1725 OmegaFallingCCC ccc_structure_exists
+R1732:1732 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1786:1792 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 1740:1740 <> x:22
+R1763:1766 Corelib.Init.Logic <> ::type_scope:x_'\/'_x not
+R1744:1747 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1743:1743 CCCStructure <> x:22 var
+R1748:1762 CCCStructure OmegaFallingCCC terminal_object def
+R1768:1770 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R1767:1767 CCCStructure <> x:22 var
+R1771:1785 CCCStructure OmegaFallingCCC terminal_object def
+R1793:1793 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1842:1849 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1882:1882 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 1801:1801 <> x:23
+binder 1803:1803 <> y:24
+R1822:1825 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1817:1820 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1806:1812 CCCStructure OmegaFallingCCC product def
+R1814:1814 CCCStructure <> x:23 var
+R1816:1816 CCCStructure <> y:24 var
+R1821:1821 CCCStructure <> x:23 var
+R1837:1840 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1826:1832 CCCStructure OmegaFallingCCC product def
+R1834:1834 CCCStructure <> x:23 var
+R1836:1836 CCCStructure <> y:24 var
+R1841:1841 CCCStructure <> y:24 var
+binder 1857:1857 <> x:25
+binder 1859:1859 <> y:26
+R1877:1880 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R1862:1872 CCCStructure OmegaFallingCCC exponential def
+R1874:1874 CCCStructure <> x:25 var
+R1876:1876 CCCStructure <> y:26 var
+R1911:1925 CCCStructure OmegaFallingCCC terminal_is_max thm
+R1911:1925 CCCStructure OmegaFallingCCC terminal_is_max thm
+R1974:1996 CCCStructure OmegaFallingCCC product_projection_left thm
+R1974:1996 CCCStructure OmegaFallingCCC product_projection_left thm
+R2013:2036 CCCStructure OmegaFallingCCC product_projection_right thm
+R2013:2036 CCCStructure OmegaFallingCCC product_projection_right thm
+R2059:2081 CCCStructure OmegaFallingCCC exponential_nonnegative thm
+R2059:2081 CCCStructure OmegaFallingCCC exponential_nonnegative thm
+prf 2124:2140 OmegaFallingCCC delta_nonnegative
+binder 2151:2151 <> x:27
+binder 2153:2153 <> y:28
+R2165:2168 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R2156:2160 CCCStructure OmegaFallingCCC delta def
+R2162:2162 CCCStructure <> x:27 var
+R2164:2164 CCCStructure <> y:28 var
+R2196:2200 CCCStructure OmegaFallingCCC delta def
+prf 2260:2277 OmegaFallingCCC delta_product_le_x
+binder 2288:2288 <> x:29
+binder 2290:2290 <> y:30
+R2314:2316 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2293:2297 CCCStructure OmegaFallingCCC delta def
+R2300:2306 CCCStructure OmegaFallingCCC product def
+R2308:2308 CCCStructure <> x:29 var
+R2310:2310 CCCStructure <> y:30 var
+R2313:2313 CCCStructure <> x:29 var
+R2344:2348 CCCStructure OmegaFallingCCC delta def
+R2351:2357 CCCStructure OmegaFallingCCC product def
+R2375:2389 CCCStructure OmegaFallingCCC <> mod

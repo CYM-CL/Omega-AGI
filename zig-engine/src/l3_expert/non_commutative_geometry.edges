@@ -1,0 +1,10 @@
+CStarAlgebra -> NonCommutativeSpace
+SpectralTriple -> DiracOperator
+SpectralTriple -> HilbertSpaceRepresentation
+SpectralTriple -> AlgebraRepresentation
+DiracOperator -> CompactResolvent
+DiracOperator -> BoundedCommutator
+KTheoryClass -> CStarAlgebra
+CyclicCohomology -> CStarAlgebra
+MoritaEquivalence -> NonCommutativeSpace
+NCGMetric -> SpectralTriple

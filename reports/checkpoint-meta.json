@@ -1,0 +1,22 @@
+{
+  "schema_version": 4,
+  "schema_minor": 1,
+  "upgrade_from_v3": false,
+  "schema_version_loaded": 0,
+  "l3_step": 500,
+  "objects": 458,
+  "morphisms": 818,
+  "morphisms2": 9460,
+  "knowledge": 458,
+  "frozen": 452,
+  "fault_count": 0,
+  "resource_mode": "normal",
+  "resource_events": 0,
+  "resource_reason": "normal",
+  "hardware_backend": "accelerate_vdsp",
+  "peak_objects": 452,
+  "avg_drift": 0.393621,
+  "cache_hit_count": 0,
+  "long_run_start_ms": 1782383746000,
+  "checkpoint_write_ms": 1782383746000
+}

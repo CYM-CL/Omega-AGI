@@ -1,0 +1,5 @@
+Category|domain|AbstractStructure|level=0|coords=objects,morphisms
+GrothendieckTopology|constrains|Sheaf|level=2|coords=cover,locality
+SubobjectClassifier|classifies|ElementaryTopos|level=2|coords=logic,truth
+InternalLogic|interprets|ElementaryTopos|level=3|coords=logic,semantics,time
+GeometricMorphism|relates|ToposTheory|level=3|coords=functor,adjunction

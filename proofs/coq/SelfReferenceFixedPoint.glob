@@ -1,0 +1,194 @@
+DIGEST be82a48100e1cbfaa3c15b49fe4c8df5
+FSelfReferenceFixedPoint
+R27:37 Stdlib.Arith.Arith <> <> lib
+R67:80 Stdlib.Arith.PeanoNat <> <> lib
+R110:112 Stdlib.micromega.Lia <> <> lib
+mod 214:238 <> OmegaFallingSelfReference
+def 253:257 OmegaFallingSelfReference M_val
+R261:263 Corelib.Init.Datatypes <> nat ind
+def 284:288 OmegaFallingSelfReference Omega
+R293:295 Corelib.Init.Datatypes <> nat ind
+def 309:313 OmegaFallingSelfReference delta
+R322:324 Corelib.Init.Datatypes <> nat ind
+binder 316:316 <> x:1
+binder 318:318 <> y:2
+R329:331 Corelib.Init.Datatypes <> nat ind
+R336:342 Stdlib.Arith.PeanoNat Nat sub def
+R344:344 SelfReferenceFixedPoint <> x:1 var
+R346:346 SelfReferenceFixedPoint <> y:2 var
+def 360:369 OmegaFallingSelfReference self_ref_T
+R376:378 Corelib.Init.Datatypes <> nat ind
+binder 372:372 <> A:3
+R383:385 Corelib.Init.Datatypes <> nat ind
+R390:394 SelfReferenceFixedPoint OmegaFallingSelfReference delta def
+R396:396 SelfReferenceFixedPoint <> A:3 var
+R398:398 SelfReferenceFixedPoint <> A:3 var
+prf 452:466 OmegaFallingSelfReference self_ref_T_zero
+binder 477:477 <> A:4
+R492:494 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R480:489 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R491:491 SelfReferenceFixedPoint <> A:4 var
+R522:531 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R534:538 SelfReferenceFixedPoint OmegaFallingSelfReference delta def
+prf 597:615 OmegaFallingSelfReference zero_is_fixed_point
+R631:633 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R619:628 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R652:666 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R652:666 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+prf 714:726 OmegaFallingSelfReference T_is_monotone
+binder 737:737 <> A:5
+binder 739:739 <> B:6
+R748:751 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R743:746 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R742:742 SelfReferenceFixedPoint <> A:5 var
+R747:747 SelfReferenceFixedPoint <> B:6 var
+R764:767 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R752:761 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R763:763 SelfReferenceFixedPoint <> A:5 var
+R768:777 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R779:779 SelfReferenceFixedPoint <> B:6 var
+R806:815 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R818:822 SelfReferenceFixedPoint OmegaFallingSelfReference delta def
+prf 881:908 OmegaFallingSelfReference fixed_points_form_sublattice
+R931:936 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R927:929 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R915:924 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R957:963 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1000:1000 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R953:955 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R937:946 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R948:952 SelfReferenceFixedPoint OmegaFallingSelfReference M_val def
+binder 971:971 <> A:7
+R990:993 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R986:988 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R974:983 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R985:985 SelfReferenceFixedPoint <> A:7 var
+R995:998 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R994:994 SelfReferenceFixedPoint <> A:7 var
+R1025:1039 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R1025:1039 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R1058:1062 SelfReferenceFixedPoint OmegaFallingSelfReference M_val def
+R1071:1085 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R1071:1085 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+prf 1154:1178 OmegaFallingSelfReference least_fixed_point_is_zero
+R1201:1205 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1241:1241 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1197:1199 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1185:1194 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+binder 1213:1213 <> A:8
+R1232:1235 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1228:1230 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1216:1225 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R1227:1227 SelfReferenceFixedPoint <> A:8 var
+R1231:1231 SelfReferenceFixedPoint <> A:8 var
+R1237:1239 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1236:1236 SelfReferenceFixedPoint <> A:8 var
+R1266:1280 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R1266:1280 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R1300:1309 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R1312:1316 SelfReferenceFixedPoint OmegaFallingSelfReference delta def
+def 1379:1388 OmegaFallingSelfReference T_iterated
+R1395:1397 Corelib.Init.Datatypes <> nat ind
+binder 1391:1391 <> n:9
+R1405:1407 Corelib.Init.Datatypes <> nat ind
+binder 1401:1401 <> A:10
+R1412:1414 Corelib.Init.Datatypes <> nat ind
+R1427:1427 SelfReferenceFixedPoint <> n:9 var
+R1443:1443 SelfReferenceFixedPoint <> A:10 var
+R1449:1449 Corelib.Init.Datatypes <> S constr
+R1456:1465 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R1468:1477 SelfReferenceFixedPoint <> T_iterated:11 def
+R1481:1481 SelfReferenceFixedPoint <> A:10 var
+prf 1500:1518 OmegaFallingSelfReference T_converges_to_zero
+binder 1529:1529 <> A:13
+binder 1531:1531 <> n:14
+R1540:1543 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1535:1538 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R1534:1534 SelfReferenceFixedPoint <> n:14 var
+R1558:1560 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1544:1553 SelfReferenceFixedPoint OmegaFallingSelfReference T_iterated def
+R1555:1555 SelfReferenceFixedPoint <> n:14 var
+R1557:1557 SelfReferenceFixedPoint <> A:13 var
+R1627:1636 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R1639:1643 SelfReferenceFixedPoint OmegaFallingSelfReference delta def
+prf 1706:1738 OmegaFallingSelfReference self_reference_fixed_point_exists
+R1745:1751 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1753:1754 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 1752:1752 <> A:15
+R1767:1769 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1755:1764 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R1766:1766 SelfReferenceFixedPoint <> A:15 var
+R1770:1770 SelfReferenceFixedPoint <> A:15 var
+R1798:1812 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+R1798:1812 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T_zero thm
+prf 1870:1902 OmegaFallingSelfReference self_reference_fixed_point_unique
+R1925:1929 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1965:1965 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1921:1923 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1909:1918 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+binder 1937:1937 <> A:16
+R1956:1959 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1952:1954 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1940:1949 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R1951:1951 SelfReferenceFixedPoint <> A:16 var
+R1955:1955 SelfReferenceFixedPoint <> A:16 var
+R1961:1963 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1960:1960 SelfReferenceFixedPoint <> A:16 var
+R1983:2007 SelfReferenceFixedPoint OmegaFallingSelfReference least_fixed_point_is_zero thm
+R1983:2007 SelfReferenceFixedPoint OmegaFallingSelfReference least_fixed_point_is_zero thm
+prf 2068:2101 OmegaFallingSelfReference self_reference_fixed_point_theorem
+R2108:2108 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2135:2141 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2109:2115 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2117:2118 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 2116:2116 <> A:17
+R2131:2133 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2119:2128 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R2130:2130 SelfReferenceFixedPoint <> A:17 var
+R2134:2134 SelfReferenceFixedPoint <> A:17 var
+R2142:2142 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2200:2206 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2159:2163 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2199:2199 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2155:2157 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2143:2152 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+binder 2171:2171 <> A:18
+R2190:2193 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2186:2188 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2174:2183 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R2185:2185 SelfReferenceFixedPoint <> A:18 var
+R2189:2189 SelfReferenceFixedPoint <> A:18 var
+R2195:2197 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2194:2194 SelfReferenceFixedPoint <> A:18 var
+R2207:2207 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2248:2255 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2306:2306 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+binder 2215:2215 <> A:19
+binder 2217:2217 <> n:20
+R2226:2229 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2221:2224 Corelib.Init.Peano <> ::nat_scope:x_'>='_x not
+R2220:2220 SelfReferenceFixedPoint <> n:20 var
+R2244:2246 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2230:2239 SelfReferenceFixedPoint OmegaFallingSelfReference T_iterated def
+R2241:2241 SelfReferenceFixedPoint <> n:20 var
+R2243:2243 SelfReferenceFixedPoint <> A:19 var
+binder 2263:2263 <> A:21
+binder 2265:2265 <> B:22
+R2274:2277 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2269:2272 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R2268:2268 SelfReferenceFixedPoint <> A:21 var
+R2273:2273 SelfReferenceFixedPoint <> B:22 var
+R2290:2293 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R2278:2287 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R2289:2289 SelfReferenceFixedPoint <> A:21 var
+R2294:2303 SelfReferenceFixedPoint OmegaFallingSelfReference self_ref_T def
+R2305:2305 SelfReferenceFixedPoint <> B:22 var
+R2331:2363 SelfReferenceFixedPoint OmegaFallingSelfReference self_reference_fixed_point_exists thm
+R2331:2363 SelfReferenceFixedPoint OmegaFallingSelfReference self_reference_fixed_point_exists thm
+R2381:2413 SelfReferenceFixedPoint OmegaFallingSelfReference self_reference_fixed_point_unique thm
+R2381:2413 SelfReferenceFixedPoint OmegaFallingSelfReference self_reference_fixed_point_unique thm
+R2431:2449 SelfReferenceFixedPoint OmegaFallingSelfReference T_converges_to_zero thm
+R2431:2449 SelfReferenceFixedPoint OmegaFallingSelfReference T_converges_to_zero thm
+R2460:2472 SelfReferenceFixedPoint OmegaFallingSelfReference T_is_monotone thm
+R2460:2472 SelfReferenceFixedPoint OmegaFallingSelfReference T_is_monotone thm
+R2485:2509 SelfReferenceFixedPoint OmegaFallingSelfReference <> mod

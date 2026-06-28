@@ -1,0 +1,781 @@
+// Ω-落尘AGI 逻辑训练数据集 v4.1.2
+//
+// 严格对应白皮书v2.0：
+// - 第2章：CDL格enriched 2-范畴
+// - 第7章：CL-SCT+训练范式
+// - 第8章：四层数据集架构
+//
+// 设计哲学（核心：Δ为唯一原语）：
+// 逻辑运算不是"新功能"，而是格运算在{0,1}布尔域上的特例。
+// 系统已经具备所有格运算能力（latticeJoin/latticeMeet/delta），
+// 只需要训练数据让它"发现" P∧Q = lattice_meet(P,Q) 这个映射。
+//
+// 不引入任何新类型，全部使用已有 TaskType：
+// - LatticeOperation    → AND(meet), OR(join), →(join组合), ↔(meet组合), ⊕(join组合)
+// - BasicDeltaOperation → NOT(delta(1, P))
+//
+// 禁用类型（用户要求仅使用以上两种）：
+// - EquivalenceTransform（↔用latticeMeet组合实现）
+// - MorphismReasoning（推理规则用LatticeOperation表达）
+// - SelfValidation（自校验用LatticeOperation表达）
+//
+// 脑内演算（无草稿纸）：
+// P AND Q = lattice_meet(P, Q)      ← LatticeOperation
+// P OR Q  = lattice_join(P, Q)      ← LatticeOperation
+// NOT P   = delta(1, P)             ← BasicDeltaOperation
+// P → Q   = join(delta(1,P), Q)     ← LatticeOperation（外层是join）
+// P ↔ Q   = meet(P→Q, Q→P)         ← LatticeOperation（外层是meet）
+// P ⊕ Q   = join(meet(P,¬Q), meet(¬P,Q)) ← LatticeOperation（外层是join）
+//
+// 纯Δ实现（不新增运算符）：
+// 所有 expected 值通过现有 engine 方法直接内联推导，无辅助函数：
+// - latticeJoin(a_id, b_id) 返回 LatticeOperationError!f64
+// - latticeMeet(a_id, b_id) 返回 LatticeOperationError!f64
+// - delta(x_id, y_id)       返回 f64（无error）
+//
+// 链式调用：latticeJoin/latticeMeet 返回 f64，传入下一个格运算前
+// 需要用 getOrCreateNumber(@intFromFloat(val)) 转回 u64 对象ID
+
+const std = @import("std");
+const tt = @import("trainer_types.zig");
+const DeltaEngine = @import("delta_engine.zig").DeltaEngine;
+const eds = @import("endogenous_dataset.zig");
+
+// ============================================================
+// 逻辑训练数据集（遵循EndogenousDataset四层架构）
+// ============================================================
+
+/// 逻辑训练数据集管理器
+///
+/// 设计定义：
+///   遵循白皮书第8章四层数据集架构，全部使用已有 TaskType：
+///   - LatticeOperation：AND（meet）、OR（join）、→（join+delta组合）
+///   - BasicDeltaOperation：NOT（delta）
+///
+/// 核心哲学：
+///   所有 expected 值通过Δ/格运算推导，严禁硬编码真值表。
+///   系统不需要知道"这是逻辑"——它只需要通过Δ压力学会
+///   lattice_meet(1,0)=0 这个映射，然后自然就能做 AND 运算。
+pub const LogicDataset = struct {
+    // 四层数据集（使用与数学运算相同的数据结构）
+    axiom_benchmarks: std.ArrayList(eds.DatasetSample),
+    bootstrap_generated: std.ArrayList(eds.DatasetSample),
+    auto_expanded: std.ArrayList(eds.DatasetSample),
+    adversarial_boundary: std.ArrayList(eds.DatasetSample),
+    allocator: std.mem.Allocator,
+
+    pub fn init(allocator: std.mem.Allocator) LogicDataset {
+        return .{
+            .axiom_benchmarks = std.ArrayList(eds.DatasetSample).empty,
+            .bootstrap_generated = std.ArrayList(eds.DatasetSample).empty,
+            .auto_expanded = std.ArrayList(eds.DatasetSample).empty,
+            .adversarial_boundary = std.ArrayList(eds.DatasetSample).empty,
+            .allocator = allocator,
+        };
+    }
+
+    pub fn deinit(self: *LogicDataset) void {
+        self.axiom_benchmarks.deinit(self.allocator);
+        self.bootstrap_generated.deinit(self.allocator);
+        self.auto_expanded.deinit(self.allocator);
+        self.adversarial_boundary.deinit(self.allocator);
+    }
+
+    /// 获取指定类型的样本
+    pub fn getSample(self: *const LogicDataset, sample_type: eds.SampleType) ?eds.DatasetSample {
+        const list = switch (sample_type) {
+            .AxiomBenchmark => self.axiom_benchmarks.items,
+            .BootstrapGenerated => self.bootstrap_generated.items,
+            .AutoExpanded => self.auto_expanded.items,
+            .AdversarialBoundary => self.adversarial_boundary.items,
+        };
+        if (list.len == 0) return null;
+        return list[0];
+    }
+
+    /// 获取指定类型样本数量
+    pub fn sampleCount(self: *const LogicDataset, sample_type: eds.SampleType) usize {
+        return switch (sample_type) {
+            .AxiomBenchmark => self.axiom_benchmarks.items.len,
+            .BootstrapGenerated => self.bootstrap_generated.items.len,
+            .AutoExpanded => self.auto_expanded.items.len,
+            .AdversarialBoundary => self.adversarial_boundary.items.len,
+        };
+    }
+
+    /// 获取总样本数量
+    pub fn totalCount(self: *const LogicDataset) usize {
+        return self.axiom_benchmarks.items.len +
+            self.bootstrap_generated.items.len +
+            self.auto_expanded.items.len +
+            self.adversarial_boundary.items.len;
+    }
+
+    /// 生成第一层：公理基准集（真值表，通过Δ/格运算推导）
+    ///
+    /// 所有 P,Q ∈ {0,1} 的6种逻辑运算真值表，每种4行（4种组合）。
+    /// expected 全部通过 engine 的现有格/Δ运算内联计算，严禁硬编码。
+    ///
+    /// 类型分布：
+    ///   - LatticeOperation：AND, OR, →, ↔, ⊕（5种 × 4组合 = 20条正样本）
+    ///   - BasicDeltaOperation：NOT（1种 × 2组合 = 2条正样本）
+    pub fn generateAxiomBenchmarks(self: *LogicDataset, engine: *DeltaEngine) !void {
+        self.axiom_benchmarks.clearRetainingCapacity();
+
+        const booleans = [_]u64{ 0, 1 };
+        for (booleans) |p| {
+            for (booleans) |q| {
+                const p_id = try engine.getOrCreateNumber(p);
+                const q_id = try engine.getOrCreateNumber(q);
+
+                // AND: P ∧ Q = lattice_meet(P, Q) → LatticeOperation
+                {
+                    const result = try engine.latticeMeet(p_id, q_id);
+                    const expected: i64 = @intFromFloat(result);
+                    // 正样本
+                    try self.axiom_benchmarks.append(self.allocator, .{
+                        .sample_type = .AxiomBenchmark,
+                        .level = 1,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                    // 负样本：取反的正确结果
+                    const wrong = if (expected == 0) @as(i64, 1) else @as(i64, 0);
+                    try self.axiom_benchmarks.append(self.allocator, .{
+                        .sample_type = .AxiomBenchmark,
+                        .level = 1,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = wrong,
+                        .is_positive = false,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // OR: P ∨ Q = lattice_join(P, Q) → LatticeOperation
+                {
+                    const result = try engine.latticeJoin(p_id, q_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.axiom_benchmarks.append(self.allocator, .{
+                        .sample_type = .AxiomBenchmark,
+                        .level = 1,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // →: P→Q = join(delta(1,P), Q) → LatticeOperation
+                {
+                    const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                    const result = try engine.latticeJoin(not_p_id, q_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.axiom_benchmarks.append(self.allocator, .{
+                        .sample_type = .AxiomBenchmark,
+                        .level = 1,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // ↔: P↔Q = meet(P→Q, Q→P) → LatticeOperation
+                {
+                    const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                    const p_to_q = try engine.latticeJoin(not_p_id, q_id);
+                    const p_to_q_id = try engine.getOrCreateNumber(@intFromFloat(p_to_q));
+
+                    const not_q_val = engine.deltaExpr(engine.one_id, q_id);
+                    const not_q_id = try engine.getOrCreateNumber(@intFromFloat(not_q_val));
+                    const q_to_p = try engine.latticeJoin(not_q_id, p_id);
+                    const q_to_p_id = try engine.getOrCreateNumber(@intFromFloat(q_to_p));
+
+                    const result = try engine.latticeMeet(p_to_q_id, q_to_p_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.axiom_benchmarks.append(self.allocator, .{
+                        .sample_type = .AxiomBenchmark,
+                        .level = 1,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // ⊕: P⊕Q = join(meet(P,¬Q), meet(¬P,Q)) → LatticeOperation
+                {
+                    const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                    const not_q_val = engine.deltaExpr(engine.one_id, q_id);
+                    const not_q_id = try engine.getOrCreateNumber(@intFromFloat(not_q_val));
+
+                    const p_and_not_q = try engine.latticeMeet(p_id, not_q_id);
+                    const p_and_not_q_id = try engine.getOrCreateNumber(@intFromFloat(p_and_not_q));
+                    const not_p_and_q = try engine.latticeMeet(not_p_id, q_id);
+                    const not_p_and_q_id = try engine.getOrCreateNumber(@intFromFloat(not_p_and_q));
+
+                    const result = try engine.latticeJoin(p_and_not_q_id, not_p_and_q_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.axiom_benchmarks.append(self.allocator, .{
+                        .sample_type = .AxiomBenchmark,
+                        .level = 1,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+            }
+        }
+
+        // NOT: ¬P = delta(1, P) → BasicDeltaOperation（一元运算，单独处理）
+        for (booleans) |p| {
+            const p_id = try engine.getOrCreateNumber(p);
+            const result: f64 = engine.deltaExpr(engine.one_id, p_id);
+            const expected: i64 = @intFromFloat(result);
+            try self.axiom_benchmarks.append(self.allocator, .{
+                .sample_type = .AxiomBenchmark,
+                .level = 1,
+                .complexity = .Level_1,
+                .param1 = @intCast(p),
+                .param2 = 0,
+                .expected = expected,
+                .is_positive = true,
+                .equivalent_pair_id = null,
+            });
+        }
+    }
+
+    /// 生成第二层：自举生成集（三层嵌套逻辑表达式）
+    ///
+    /// 全部使用 LatticeOperation 类型，因为所有复合表达式的
+    /// 最外层运算都是latticeJoin或latticeMeet。
+    /// P,Q,R ∈ {0,1} 共8种组合，每种3个表达式 = 24条正样本。
+    pub fn generateBootstrapSamples(self: *LogicDataset, engine: *DeltaEngine) !void {
+        self.bootstrap_generated.clearRetainingCapacity();
+
+        const booleans = [_]u64{ 0, 1 };
+
+        for (booleans) |p| {
+            for (booleans) |q| {
+                for (booleans) |r| {
+                    const p_id = try engine.getOrCreateNumber(p);
+                    const q_id = try engine.getOrCreateNumber(q);
+                    const r_id = try engine.getOrCreateNumber(r);
+
+                    // 编码3比特为param1: P*4 + Q*2 + R
+                    const encoded = @as(i64, @intCast(p * 4 + q * 2 + r));
+
+                    // (P∧Q)→R = join(delta(1, meet(P,Q)), R) → LatticeOperation
+                    {
+                        const and_pq = try engine.latticeMeet(p_id, q_id);
+                        const and_pq_id = try engine.getOrCreateNumber(@intFromFloat(and_pq));
+                        const not_and_val = engine.deltaExpr(engine.one_id, and_pq_id);
+                        const not_and_id = try engine.getOrCreateNumber(@intFromFloat(not_and_val));
+                        const result = try engine.latticeJoin(not_and_id, r_id);
+                        const expected: i64 = @intFromFloat(result);
+                        try self.bootstrap_generated.append(self.allocator, .{
+                            .sample_type = .BootstrapGenerated,
+                            .level = 2,
+                            .complexity = .Level_3,
+                            .param1 = encoded,
+                            .param2 = 0,
+                            .expected = expected,
+                            .is_positive = true,
+                            .equivalent_pair_id = null,
+                        });
+                    }
+
+                    // P∨(Q∧R) = join(P, meet(Q,R)) → LatticeOperation
+                    {
+                        const and_qr = try engine.latticeMeet(q_id, r_id);
+                        const and_qr_id = try engine.getOrCreateNumber(@intFromFloat(and_qr));
+                        const result = try engine.latticeJoin(p_id, and_qr_id);
+                        const expected: i64 = @intFromFloat(result);
+                        try self.bootstrap_generated.append(self.allocator, .{
+                            .sample_type = .BootstrapGenerated,
+                            .level = 2,
+                            .complexity = .Level_3,
+                            .param1 = encoded,
+                            .param2 = 1,
+                            .expected = expected,
+                            .is_positive = true,
+                            .equivalent_pair_id = null,
+                        });
+                    }
+
+                    // (P→Q)∧(Q→R) = meet(join(delta(1,P),Q), join(delta(1,Q),R)) → LatticeOperation
+                    {
+                        const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                        const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                        const p_to_q = try engine.latticeJoin(not_p_id, q_id);
+                        const p_to_q_id = try engine.getOrCreateNumber(@intFromFloat(p_to_q));
+
+                        const not_q_val = engine.deltaExpr(engine.one_id, q_id);
+                        const not_q_id = try engine.getOrCreateNumber(@intFromFloat(not_q_val));
+                        const q_to_r = try engine.latticeJoin(not_q_id, r_id);
+                        const q_to_r_id = try engine.getOrCreateNumber(@intFromFloat(q_to_r));
+
+                        const result = try engine.latticeMeet(p_to_q_id, q_to_r_id);
+                        const expected: i64 = @intFromFloat(result);
+                        try self.bootstrap_generated.append(self.allocator, .{
+                            .sample_type = .BootstrapGenerated,
+                            .level = 2,
+                            .complexity = .Level_3,
+                            .param1 = encoded,
+                            .param2 = 2,
+                            .expected = expected,
+                            .is_positive = true,
+                            .equivalent_pair_id = null,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    /// 生成第三层：自主扩张集（推理规则验证、等价定律）
+    ///
+    /// 验证逻辑定律在所有 P,Q ∈ {0,1} 上恒成立。
+    /// 全部使用 LatticeOperation 类型。
+    ///
+    /// 验证定律：
+    /// - 假言推理（Modus Ponens）：((P→Q)∧P) → Q
+    /// - 拒取式（Modus Tollens）：((P→Q)∧¬Q) → ¬P
+    /// - DeMorgan律1：¬(P∧Q) ↔ (¬P∨¬Q)
+    /// - DeMorgan律2：¬(P∨Q) ↔ (¬P∧¬Q)
+    pub fn generateAutoExpandedSamples(self: *LogicDataset, engine: *DeltaEngine) !void {
+        self.auto_expanded.clearRetainingCapacity();
+
+        const booleans = [_]u64{ 0, 1 };
+
+        for (booleans) |p| {
+            for (booleans) |q| {
+                const p_id = try engine.getOrCreateNumber(p);
+                const q_id = try engine.getOrCreateNumber(q);
+
+                // 假言推理：((P→Q)∧P) → Q → LatticeOperation（应恒为真）
+                {
+                    // P→Q = join(delta(1,P), Q)
+                    const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                    const p_implies_q = try engine.latticeJoin(not_p_id, q_id);
+                    const p_implies_q_id = try engine.getOrCreateNumber(@intFromFloat(p_implies_q));
+
+                    // (P→Q)∧P
+                    const premise = try engine.latticeMeet(p_implies_q_id, p_id);
+                    const premise_id = try engine.getOrCreateNumber(@intFromFloat(premise));
+
+                    // ((P→Q)∧P) → Q = join(delta(1, premise), Q)
+                    const not_premise_val = engine.deltaExpr(engine.one_id, premise_id);
+                    const not_premise_id = try engine.getOrCreateNumber(@intFromFloat(not_premise_val));
+                    const result = try engine.latticeJoin(not_premise_id, q_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.auto_expanded.append(self.allocator, .{
+                        .sample_type = .AutoExpanded,
+                        .level = 3,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // 拒取式：((P→Q)∧¬Q) → ¬P → LatticeOperation（应恒为真）
+                {
+                    // P→Q = join(delta(1,P), Q)
+                    const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                    const p_implies_q = try engine.latticeJoin(not_p_id, q_id);
+                    const p_implies_q_id = try engine.getOrCreateNumber(@intFromFloat(p_implies_q));
+
+                    // ¬Q = delta(1, Q)
+                    const not_q_val = engine.deltaExpr(engine.one_id, q_id);
+                    const not_q_id = try engine.getOrCreateNumber(@intFromFloat(not_q_val));
+
+                    // (P→Q)∧¬Q
+                    const premise = try engine.latticeMeet(p_implies_q_id, not_q_id);
+                    const premise_id = try engine.getOrCreateNumber(@intFromFloat(premise));
+
+                    // ((P→Q)∧¬Q) → ¬P = join(delta(1, premise), not(P))
+                    const not_premise_val = engine.deltaExpr(engine.one_id, premise_id);
+                    const not_premise_id = try engine.getOrCreateNumber(@intFromFloat(not_premise_val));
+                    const result = try engine.latticeJoin(not_premise_id, not_p_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.auto_expanded.append(self.allocator, .{
+                        .sample_type = .AutoExpanded,
+                        .level = 3,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p),
+                        .param2 = @intCast(q),
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // DeMorgan律1：¬(P∧Q) ↔ (¬P∨¬Q) → LatticeOperation（应恒为真）
+                {
+                    // 左 = delta(1, meet(P,Q))
+                    const meet_pq = try engine.latticeMeet(p_id, q_id);
+                    const meet_pq_id = try engine.getOrCreateNumber(@intFromFloat(meet_pq));
+                    const left_val = engine.deltaExpr(engine.one_id, meet_pq_id);
+                    const left_id = try engine.getOrCreateNumber(@intFromFloat(left_val));
+
+                    // 右 = join(delta(1,P), delta(1,Q))
+                    const not_p_val2 = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id2 = try engine.getOrCreateNumber(@intFromFloat(not_p_val2));
+                    const not_q_val2 = engine.deltaExpr(engine.one_id, q_id);
+                    const not_q_id2 = try engine.getOrCreateNumber(@intFromFloat(not_q_val2));
+                    const right_val = try engine.latticeJoin(not_p_id2, not_q_id2);
+                    const right_id = try engine.getOrCreateNumber(@intFromFloat(right_val));
+
+                    // me et(left→right, right→left)
+                    const not_left_val = engine.deltaExpr(engine.one_id, left_id);
+                    const not_left_id = try engine.getOrCreateNumber(@intFromFloat(not_left_val));
+                    const l_to_r = try engine.latticeJoin(not_left_id, right_id);
+                    const l_to_r_id = try engine.getOrCreateNumber(@intFromFloat(l_to_r));
+
+                    const not_right_val = engine.deltaExpr(engine.one_id, right_id);
+                    const not_right_id = try engine.getOrCreateNumber(@intFromFloat(not_right_val));
+                    const r_to_l = try engine.latticeJoin(not_right_id, left_id);
+                    const r_to_l_id = try engine.getOrCreateNumber(@intFromFloat(r_to_l));
+
+                    const result = try engine.latticeMeet(l_to_r_id, r_to_l_id);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.auto_expanded.append(self.allocator, .{
+                        .sample_type = .AutoExpanded,
+                        .level = 3,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p * 2 + q),
+                        .param2 = 0,
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+
+                // DeMorgan律2：¬(P∨Q) ↔ (¬P∧¬Q) → LatticeOperation（应恒为真）
+                {
+                    // 左 = delta(1, join(P,Q))
+                    const join_pq = try engine.latticeJoin(p_id, q_id);
+                    const join_pq_id = try engine.getOrCreateNumber(@intFromFloat(join_pq));
+                    const left_val = engine.deltaExpr(engine.one_id, join_pq_id);
+                    const left_id = try engine.getOrCreateNumber(@intFromFloat(left_val));
+
+                    // 右 = meet(delta(1,P), delta(1,Q))
+                    const not_p_val3 = engine.deltaExpr(engine.one_id, p_id);
+                    const not_p_id3 = try engine.getOrCreateNumber(@intFromFloat(not_p_val3));
+                    const not_q_val3 = engine.deltaExpr(engine.one_id, q_id);
+                    const not_q_id3 = try engine.getOrCreateNumber(@intFromFloat(not_q_val3));
+                    const right_val = try engine.latticeMeet(not_p_id3, not_q_id3);
+                    const right_id = try engine.getOrCreateNumber(@intFromFloat(right_val));
+
+                    // meet(left→right, right→left)
+                    const not_left_val = engine.deltaExpr(engine.one_id, left_id);
+                    const not_left_id2 = try engine.getOrCreateNumber(@intFromFloat(not_left_val));
+                    const l_to_r = try engine.latticeJoin(not_left_id2, right_id);
+                    const l_to_r_id2 = try engine.getOrCreateNumber(@intFromFloat(l_to_r));
+
+                    const not_right_val = engine.deltaExpr(engine.one_id, right_id);
+                    const not_right_id2 = try engine.getOrCreateNumber(@intFromFloat(not_right_val));
+                    const r_to_l = try engine.latticeJoin(not_right_id2, left_id);
+                    const r_to_l_id2 = try engine.getOrCreateNumber(@intFromFloat(r_to_l));
+
+                    const result = try engine.latticeMeet(l_to_r_id2, r_to_l_id2);
+                    const expected: i64 = @intFromFloat(result);
+                    try self.auto_expanded.append(self.allocator, .{
+                        .sample_type = .AutoExpanded,
+                        .level = 3,
+                        .complexity = .Level_3,
+                        .param1 = @intCast(p * 2 + q),
+                        .param2 = 1,
+                        .expected = expected,
+                        .is_positive = true,
+                        .equivalent_pair_id = null,
+                    });
+                }
+            }
+        }
+    }
+
+    /// 生成第四层：对抗边界集（悖论、自指、歧义）
+    ///
+    /// 全部使用 LatticeOperation 或 BasicDeltaOperation 类型。
+    /// 测试系统在极限边界case下的推理能力。
+    pub fn generateAdversarialSamples(self: *LogicDataset, engine: *DeltaEngine) !void {
+        self.adversarial_boundary.clearRetainingCapacity();
+
+        // 1. 悖论：P↔¬P（自相矛盾的命题）→ LatticeOperation
+        //    P=0时：¬P=1, P→¬P=1, ¬P→P=0, 整体=0（假）
+        //    P=1时：¬P=0, P→¬P=0, ¬P→P=1, 整体=0（假）
+        {
+            const p_id = try engine.getOrCreateNumber(0);
+            const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+            const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+
+            // P→¬P = join(delta(1,P), ¬P)
+            const not_p_val2 = engine.deltaExpr(engine.one_id, p_id);
+            const not_p_id2 = try engine.getOrCreateNumber(@intFromFloat(not_p_val2));
+            const p_to_not_p = try engine.latticeJoin(not_p_id2, not_p_id);
+            const p_to_not_p_id = try engine.getOrCreateNumber(@intFromFloat(p_to_not_p));
+
+            // ¬P→P = join(delta(1,¬P), P)
+            const not_not_p_val = engine.deltaExpr(engine.one_id, not_p_id);
+            const not_not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_not_p_val));
+            const not_p_to_p = try engine.latticeJoin(not_not_p_id, p_id);
+            const not_p_to_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_to_p));
+
+            // P↔¬P = meet(P→¬P, ¬P→P)
+            const result = try engine.latticeMeet(p_to_not_p_id, not_p_to_p_id);
+            const expected: i64 = @intFromFloat(result);
+            try self.adversarial_boundary.append(self.allocator, .{
+                .sample_type = .AdversarialBoundary,
+                .level = 3,
+                .complexity = .Level_3,
+                .param1 = 0,
+                .param2 = 0,
+                .expected = expected,
+                .is_positive = true,
+                .equivalent_pair_id = null,
+            });
+        }
+
+        // 2. 歧义验证：(P∧Q)∨R vs P∧(Q∨R) → LatticeOperation
+        {
+            const p_id = try engine.getOrCreateNumber(1);
+            const q_id = try engine.getOrCreateNumber(0);
+            const r_id = try engine.getOrCreateNumber(1);
+
+            // (P∧Q)∨R = join(meet(P,Q), R)
+            const meet_pq = try engine.latticeMeet(p_id, q_id);
+            const meet_pq_id = try engine.getOrCreateNumber(@intFromFloat(meet_pq));
+            const left = try engine.latticeJoin(meet_pq_id, r_id);
+            const left_id = try engine.getOrCreateNumber(@intFromFloat(left));
+
+            // P∧(Q∨R) = meet(P, join(Q,R))
+            const join_qr = try engine.latticeJoin(q_id, r_id);
+            const join_qr_id = try engine.getOrCreateNumber(@intFromFloat(join_qr));
+            const right = try engine.latticeMeet(p_id, join_qr_id);
+            const right_id = try engine.getOrCreateNumber(@intFromFloat(right));
+
+            // 验证等价：meet(left→right, right→left)
+            const not_left_val = engine.deltaExpr(engine.one_id, left_id);
+            const not_left_id = try engine.getOrCreateNumber(@intFromFloat(not_left_val));
+            const l_to_r = try engine.latticeJoin(not_left_id, right_id);
+            const l_to_r_id = try engine.getOrCreateNumber(@intFromFloat(l_to_r));
+
+            const not_right_val = engine.deltaExpr(engine.one_id, right_id);
+            const not_right_id = try engine.getOrCreateNumber(@intFromFloat(not_right_val));
+            const r_to_l = try engine.latticeJoin(not_right_id, left_id);
+            const r_to_l_id = try engine.getOrCreateNumber(@intFromFloat(r_to_l));
+
+            const result = try engine.latticeMeet(l_to_r_id, r_to_l_id);
+            const expected: i64 = @intFromFloat(result);
+            try self.adversarial_boundary.append(self.allocator, .{
+                .sample_type = .AdversarialBoundary,
+                .level = 3,
+                .complexity = .Level_3,
+                .param1 = 1,
+                .param2 = 0,
+                .expected = expected,
+                .is_positive = true,
+                .equivalent_pair_id = null,
+            });
+        }
+
+        // 3. 排中律：P∨¬P 恒为真 → LatticeOperation
+        {
+            const booleans = [_]u64{ 0, 1 };
+            for (booleans) |p| {
+                const p_id = try engine.getOrCreateNumber(p);
+                const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                const result = try engine.latticeJoin(p_id, not_p_id);
+                const expected: i64 = @intFromFloat(result);
+                try self.adversarial_boundary.append(self.allocator, .{
+                    .sample_type = .AdversarialBoundary,
+                    .level = 3,
+                    .complexity = .Level_3,
+                    .param1 = @intCast(p),
+                    .param2 = @intCast(p),
+                    .expected = expected,
+                    .is_positive = true,
+                    .equivalent_pair_id = null,
+                });
+            }
+        }
+
+        // 4. 矛盾律：¬(P∧¬P) 恒为真 → BasicDeltaOperation
+        {
+            const booleans = [_]u64{ 0, 1 };
+            for (booleans) |p| {
+                const p_id = try engine.getOrCreateNumber(p);
+                const not_p_val = engine.deltaExpr(engine.one_id, p_id);
+                const not_p_id = try engine.getOrCreateNumber(@intFromFloat(not_p_val));
+                const meet_p_notp = try engine.latticeMeet(p_id, not_p_id);
+                const meet_p_notp_id = try engine.getOrCreateNumber(@intFromFloat(meet_p_notp));
+                const result: f64 = engine.deltaExpr(engine.one_id, meet_p_notp_id);
+                const expected: i64 = @intFromFloat(result);
+                try self.adversarial_boundary.append(self.allocator, .{
+                    .sample_type = .AdversarialBoundary,
+                    .level = 3,
+                    .complexity = .Level_1,
+                    .param1 = @intCast(p),
+                    .param2 = 0,
+                    .expected = expected,
+                    .is_positive = true,
+                    .equivalent_pair_id = null,
+                });
+            }
+        }
+    }
+};
+
+// ============================================================
+// 单元测试
+// ============================================================
+
+test "LogicDataset 初始化" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+
+    try std.testing.expectEqual(@as(usize, 0), dataset.axiom_benchmarks.items.len);
+    try std.testing.expectEqual(@as(usize, 0), dataset.bootstrap_generated.items.len);
+    try std.testing.expectEqual(@as(usize, 0), dataset.auto_expanded.items.len);
+    try std.testing.expectEqual(@as(usize, 0), dataset.adversarial_boundary.items.len);
+}
+
+test "LogicDataset 公理基准集生成" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+    var engine = try DeltaEngine.init(std.testing.allocator);
+    defer engine.deinit();
+
+    try dataset.generateAxiomBenchmarks(&engine);
+
+    // 4种P,Q组合 × 5个LatticeOperation(AND/OR/→/↔/⊕) = 20正+4负 + 2个NOT
+    try std.testing.expect(dataset.axiom_benchmarks.items.len >= 24);
+    try std.testing.expect(dataset.sampleCount(.AxiomBenchmark) >= 24);
+
+    for (dataset.axiom_benchmarks.items) |sample| {
+        try std.testing.expect(sample.complexity == .Level_3 or
+            sample.complexity == .Level_1);
+    }
+}
+
+test "LogicDataset 自举生成集" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+    var engine = try DeltaEngine.init(std.testing.allocator);
+    defer engine.deinit();
+
+    try dataset.generateBootstrapSamples(&engine);
+
+    try std.testing.expect(dataset.bootstrap_generated.items.len > 0);
+    try std.testing.expect(dataset.sampleCount(.BootstrapGenerated) > 0);
+
+    for (dataset.bootstrap_generated.items) |sample| {
+        try std.testing.expect(sample.complexity == .Level_3);
+    }
+}
+
+test "LogicDataset 自主扩张集" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+    var engine = try DeltaEngine.init(std.testing.allocator);
+    defer engine.deinit();
+
+    try dataset.generateAutoExpandedSamples(&engine);
+
+    try std.testing.expect(dataset.auto_expanded.items.len > 0);
+    try std.testing.expect(dataset.sampleCount(.AutoExpanded) > 0);
+
+    for (dataset.auto_expanded.items) |sample| {
+        try std.testing.expect(sample.complexity == .Level_3);
+    }
+}
+
+test "LogicDataset 对抗边界集" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+    var engine = try DeltaEngine.init(std.testing.allocator);
+    defer engine.deinit();
+
+    try dataset.generateAdversarialSamples(&engine);
+
+    try std.testing.expect(dataset.adversarial_boundary.items.len > 0);
+    try std.testing.expect(dataset.sampleCount(.AdversarialBoundary) > 0);
+
+    for (dataset.adversarial_boundary.items) |sample| {
+        try std.testing.expect(sample.complexity == .Level_3 or
+            sample.complexity == .Level_1);
+    }
+}
+
+test "LogicDataset 全量生成与类型约束验证" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+    var engine = try DeltaEngine.init(std.testing.allocator);
+    defer engine.deinit();
+
+    try dataset.generateAxiomBenchmarks(&engine);
+    try dataset.generateBootstrapSamples(&engine);
+    try dataset.generateAutoExpandedSamples(&engine);
+    try dataset.generateAdversarialSamples(&engine);
+
+    try std.testing.expect(dataset.totalCount() > 50);
+
+    // 遍历所有四层样本，验证无任何辅助函数引入的额外类型
+    for (dataset.axiom_benchmarks.items) |s| {
+        try std.testing.expect(s.complexity == .Level_3 or
+            s.complexity == .Level_1);
+    }
+    for (dataset.bootstrap_generated.items) |s| {
+        try std.testing.expect(s.complexity == .Level_3 or
+            s.complexity == .Level_1);
+    }
+    for (dataset.auto_expanded.items) |s| {
+        try std.testing.expect(s.complexity == .Level_3 or
+            s.complexity == .Level_1);
+    }
+    for (dataset.adversarial_boundary.items) |s| {
+        try std.testing.expect(s.complexity == .Level_3 or
+            s.complexity == .Level_1);
+    }
+}
+
+test "LogicDataset 公理基准集逻辑正确性" {
+    var dataset = LogicDataset.init(std.testing.allocator);
+    defer dataset.deinit();
+    var engine = try DeltaEngine.init(std.testing.allocator);
+    defer engine.deinit();
+
+    try dataset.generateAxiomBenchmarks(&engine);
+
+    // 验证所有正样本的expected值遵循布尔域{0,1}
+    for (dataset.axiom_benchmarks.items) |sample| {
+        if (sample.is_positive) {
+            try std.testing.expect(sample.expected == 0 or sample.expected == 1);
+        }
+    }
+}

@@ -1,0 +1,39 @@
+[package]
+name = "seed-kernel"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "seed_kernel"
+crate-type = ["staticlib", "rlib"]
+
+# ============================================================
+# 极致优化配置 - 针对Apple M3芯片ARM64架构
+# ============================================================
+# M3芯片特性：
+# - ARM64 v8.5+指令集
+# - NEON SIMD向量化
+# - 16KB L1缓存
+# - 高性能分支预测
+# - 统一内存架构（8G共享）
+[profile.release]
+opt-level = 3           # 最高优化级别
+lto = "fat"             # 跨crate全量链接时优化
+codegen-units = 1       # 单编译单元，最大化优化
+panic = "abort"         # panic直接终止，减少二进制体积
+strip = true            # 剥离调试符号
+debug = false           # 不生成调试信息
+
+# M3芯片专属编译标志
+# - target-cpu=apple-m3: 针对M3微架构优化
+# - target-feature=+neon: 启用NEON SIMD
+# - target-feature=+fp16: 启用半精度浮点
+[build]
+# 通过环境变量RUSTFLAGS传递，见build.sh
+
+# ============================================================
+# 测试配置
+# ============================================================
+[profile.test]
+opt-level = 2           # 测试用中等优化
+debug = true            # 保留调试信息
