@@ -1,6 +1,6 @@
 # Ω-AGI (Omega-AGI)
 
-**CDL v2.1 格富集2-范畴差异格智能体 — Δ驱动的AGI引擎**
+**We introduce Ω-AGI v5.0 as an endogenous evolution engine under the Gradient Universe · Dust Theory framework. Beginning from a primitive differential substrate, the system employs a Δ-operator and a graded-enriched 2-category formal system (CDL) to generate, through intrinsic evolution, the full spectrum of existence, including time, space, causality, and hierarchical complexity structures.**
 
 **License: CC BY-NC-ND 4.0** | **Status: Pre-alpha**
 
